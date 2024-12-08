@@ -53,3 +53,36 @@ def read_todo_info(project_id):
                 todo_info[key] = file.read().strip()  # очищаем от строку слева и справа
                 
     return todo_info
+
+
+def is_attributes_exists(project_id):
+    """
+    Существует ли каталог с проектом    
+    """
+    project_path = f"project_{project_id}"
+    # Проверим, что путь к проекту существует
+    return os.path.exists(project_path)
+
+
+def get_attributes_of_project(project_id):
+    """
+    Считывает атрибуты по файлам
+    
+    Параметры:
+    project_id (str): Уникальный ID проектов
+    
+    Возвращает:
+    set: Множество атрибутов
+    """
+    attrs = set()
+
+    project_path = f"project_{project_id}"
+    
+    # Проверим, что путь к проекту существует
+    if is_attributes_exists(project_id):
+        # Считываем атрибуты по файлам
+        for filename in os.listdir(project_path):
+            key = filename.split('.')[1]  # Извлечем атрибут
+            attrs|= { key }
+        
+    return attrs

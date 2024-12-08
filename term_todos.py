@@ -1,8 +1,22 @@
 from lib_nz_projects import *
 from lib_nz_todo import *
+from lib_nz_commandline import *
 import os
 import shutil
 
+def overwriteDict(old_record, new_record):
+    use_keys = set()
+    for key in old_record.keys():
+        use_keys |= { key }
+    for key in new_record.keys():
+        use_keys |= { key }
+    record = dict()
+    for key in use_keys:
+        if key in new_record.keys():
+            record[key] = new_record[key]
+        else:
+            record[key] = old_record[key]
+    return record
 
 def clear_terminal():
     os.system('clear')  # Для Linux и macOS
@@ -12,6 +26,13 @@ current_path = os.path.dirname( os.path.realpath(__file__))
 index_path = os.path.join(  current_path,  "index.projects")
 
 attributes = ("Название", "Описание", "Приоритет")
+
+
+def fill_empty_record():
+    empty_record = dict()
+    for attr in attributes:
+        empty_record[attr] = ""
+    return empty_record
 
 def about():
     return "(c) Назаров А.А, Оренбург, 2024-2025\nterm_todos - простой менеджер проектов\n"
@@ -80,36 +101,100 @@ def main_menu():
     return action
 
 
-while True:
-    clear_terminal()
-    match main_menu().strip():
-        case "q":
-            break
-        case "h":
-            print(about())    
+# интерактивный режим
+def dialog_mode():
+    while True:
+        clear_terminal()
+        match main_menu().strip():
+            case "q":
+                break
+            case "h":
+                print(about())    
+            case "lP":
+                list_projects()
+            case "+P":
+                project_id = input("Id для нового проекта:")
+                input_new_project_info(project_id)
+                list_projects()
+            case "vP":
+                project_id = input("Укажи какой id посмотреть:")
+                view_existing_project_info(project_id)
+            case "eP":
+                list_projects()
+                project_id = input("Укажи какой id отредактировать:")
+                edit_existing_project_info(project_id)
+            case "xP":
+                project_id = input("Укажи какой id удаляем: ")
+                confirm_id = input("Вы уверены? Введите еще раз имя проекта: ")
+                if (confirm_id == project_id):
+                    delete_project_totally(project_id)
+                    list_projects
+                else:
+                    print("Ничего не удалялось")
+            case _:
+                print("Действие неизвестно!")
+        wait_line()
+
+
+# режим командной строки
+def commandline_mode():
+    match get_operation_from_commandline():
+        case "":
+            print("Need opcode! Use opcode=lP|xP|eP|+P|+I|eI|vP")
+        case "+P":
+            project_id = get_project_id_from_commandline()
+            if (project_id == ""):
+                print("Should use project_id=projectId")
+            else:
+                add_project_id(index_path, project_id)
+        case "+I":
+            project_id = get_project_id_from_commandline()
+            initial_record = fill_empty_record()
+            save_todo_info(project_id, initial_record)
+            record = overwriteDict(initial_record, get_record_from_commandline(project_id, attributes))
+            print(record)
+            if (project_id == ""):
+                print("Should use project_id=projectId")
+            else:
+                add_project_id(index_path, project_id)
+                save_todo_info(project_id, record)
+        case "eI": 
+            # overwrite attrs
+            project_id = get_project_id_from_commandline()
+            empty_record = fill_empty_record()
+            old_record =  read_todo_info(project_id) if (project_id != "" and is_attributes_exists(project_id)) else empty_record
+            print(old_record)
+            new_record = get_record_from_commandline(project_id,  get_attributes_from_commandline())
+            print(new_record)
+            record = overwriteDict(old_record, new_record)
+            if (project_id == ""):
+                print("Should use project_id=projectId")
+            else:
+                add_project_id(index_path, project_id)
+                save_todo_info(project_id, record)
         case "lP":
             list_projects()
-        case "+P":
-            project_id = input("Id для нового проекта:")
-            input_new_project_info(project_id)
-            list_projects()
         case "vP":
-            project_id = input("Укажи какой id посмотреть:")
-            view_existing_project_info(project_id)
-        case "eP":
-            list_projects()
-            project_id = input("Укажи какой id отредактировать:")
-            edit_existing_project_info(project_id)
-        case "xP":
-            project_id = input("Укажи какой id удаляем: ")
-            confirm_id = input("Вы уверены? Введите еще раз имя проекта: ")
-            if (confirm_id == project_id):
-                delete_project_totally(project_id)
-                list_projects
+            project_id = get_project_id_from_commandline()
+            if (project_id == ""):
+                print("Should use project_id=projectId")
             else:
-                print("Ничего не удалялось")
+                view_existing_project_info(project_id)
+        case "xP":
+            project_id = get_project_id_from_commandline()
+            if (project_id == ""):
+                print("Should use project_id=projectId")
+            else:
+                delete_project_totally(project_id)
         case _:
-            print("Действие неизвестно!")
-    wait_line()
+            print("Unknown action")
 
 
+# получаем режим программы
+mode = get_mode_from_commandline()
+if (mode == "dialog"): # если в диалоговом
+    dialog_mode()
+elif (mode == "commandline"): # если в командном
+    commandline_mode()
+else: # неизвестный режим
+    print("Unknown mode! Use mode=dialog or mode=commandline")
