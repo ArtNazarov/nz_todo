@@ -1,14 +1,15 @@
 from lib_nz_projects import *
 from lib_nz_todo import *
-
 import os
+import shutil
+
 
 def clear_terminal():
     os.system('clear')  # Для Linux и macOS
 
 
-
-index_path = os.path.join(  os.path.dirname( os.path.realpath(__file__)),  "index.projects")
+current_path = os.path.dirname( os.path.realpath(__file__))
+index_path = os.path.join(  current_path,  "index.projects")
 
 attributes = ("Название", "Описание", "Приоритет")
 
@@ -39,13 +40,24 @@ def view_existing_project_info(project_id):
 
 def edit_existing_project_info(project_id):
     record = read_todo_info(project_id)
-    for attribute in keys(record):
-        print(f"{attribute} : {record[key]}");
+    for attribute in record.keys():
+        print(f"{attribute} : {record[attribute]}");
         keep = input("Храним значение атрибута? [Y/n]:")
         if (keep != "Y"):
             value = input(f"Укажи новое значение для {attribute}: ")
             record[attribute] = value
     save_todo_info(project_id, record)
+
+def delete_project_totally(project_id):
+    project_folder = os.path.join(current_path, f"project_{project_id}")  # Укажите путь к папке
+    # Проверяем, существует ли папка
+    if os.path.exists(project_folder):
+        # Удаляем папку и все её содержимое
+        shutil.rmtree(project_folder)
+        print(f"Данные о проекте удалены вместе с каталогом '{project_folder}' !")
+    else:
+        print(f"Каталога {project_folder} нет, удалять нечего")
+
 
 def wait_line():
     key = input("Чтобы продолжить диалог - жми enter\n")
@@ -60,6 +72,7 @@ def main_menu():
     print("+P для добавления проекта в список")
     print("vP чтобы посмотреть проект")
     print("eP чтобы отредактировать проект")
+    print("xP чтобы удалить проект")
     action = input("выбери действие: ")
     return action
 
@@ -84,6 +97,14 @@ while True:
             list_projects()
             project_id = input("Укажи какой id отредактировать:")
             edit_existing_project_info(project_id)
+        case "xP":
+            project_id = input("Укажи какой id удаляем")
+            confirm_id = input("Вы уверены? Введите еще раз имя проекта: ")
+            if (confirm_id == project_id):
+                delete_project_totally(project_id)
+                list_projects
+            else:
+                print("Ничего не удалялось")
         case _:
             print("Действие неизвестно!")
     wait_line()
