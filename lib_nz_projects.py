@@ -45,3 +45,42 @@ def read_project_ids(file_path):
     except Exception as e:
         # print(f"Error: {e}")
         return []
+
+
+def delete_project_id(index_path, project_id):
+    """
+    Удаляет указанный проект по его ID из файла.
+
+    Параметры:
+    index_path (str): путь к индексу
+    project_id (str): строковый ID проекта для удаления
+    """
+    existing_ids = set()
+
+    try:
+        # Считаем существующие ID
+        with open(index_path, 'r') as file:
+            existing_ids = set(line.strip() for line in file)
+
+    except FileNotFoundError:
+        print("Файл не найден. Убедитесь, что путь указан правильно.")
+        return
+    except Exception as e:
+        print(f"Ошибка при чтении файла: {e}")
+        return
+
+    # Удалим проект, если он существует
+    existing_ids.discard(str(project_id))
+
+    try:
+        # Отсортируем и запишем в отсортированном виде
+        with open(index_path, 'w') as file:
+            for project in sorted(existing_ids):
+                file.write(f"{project}\n")
+        print(f"Проект с ID '{project_id}' успешно удалён.")
+        
+    except Exception as e:
+        print(f"Ошибка при записи в файл: {e}")
+
+# Пример использования
+# delete_project_id('path/to/index.projects', 'project_id_to_delete')

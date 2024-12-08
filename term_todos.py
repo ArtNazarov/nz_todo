@@ -49,7 +49,10 @@ def edit_existing_project_info(project_id):
     save_todo_info(project_id, record)
 
 def delete_project_totally(project_id):
-    project_folder = os.path.join(current_path, f"project_{project_id}")  # Укажите путь к папке
+    # удаляем ID проекта из индекса
+    delete_project_id(index_path, project_id)
+    # Путь к каталогу с данными
+    project_folder = os.path.join(current_path, f"project_{project_id}")  
     # Проверяем, существует ли папка
     if os.path.exists(project_folder):
         # Удаляем папку и все её содержимое
@@ -98,7 +101,7 @@ while True:
             project_id = input("Укажи какой id отредактировать:")
             edit_existing_project_info(project_id)
         case "xP":
-            project_id = input("Укажи какой id удаляем")
+            project_id = input("Укажи какой id удаляем: ")
             confirm_id = input("Вы уверены? Введите еще раз имя проекта: ")
             if (confirm_id == project_id):
                 delete_project_totally(project_id)
