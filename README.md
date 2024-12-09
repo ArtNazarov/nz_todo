@@ -68,3 +68,13 @@ contained values of attributes in files names ProjectName.AttrName
 Script creates index.tasks file in project directory with list of tasks ID.
 For each new task will be create folder task_TaskId that
 contained values of attributes in files names taskId.AttrName
+
+Pipe mode
+===
+
+Use like:
+
+```
+echo ' opcode = "+P" ; project_id="test" #  opcode = "lP" ' | python term_todos.py mode=pipe
+```
+
