@@ -62,6 +62,23 @@ def get_record_from_commandline(project_id, attributes):
                 record[attr] = sys.argv[i].split('=')[1]
     return record
 
+
+def get_record_about_task_from_commandline(project_id, attributes_of_task):
+    """
+    Составляет словарь по командной строке
+
+    project_id (str): id проекта
+    """
+    record = dict()
+    n = len(sys.argv)
+    for attr in attributes_of_task:
+        record[attr] = "" # начальное значение
+        for i in range(1, n):
+            if f".{attr}=" in sys.argv[i]:
+                record[attr] = sys.argv[i].split('=')[1]
+    return record
+
+
 def get_attributes_from_commandline():
     """
     Составляет множество атрибутов по командной строке

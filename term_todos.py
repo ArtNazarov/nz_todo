@@ -45,6 +45,10 @@ def about():
     return "(c) Назаров А.А, Оренбург, 2024-2025\nterm_todos - простой менеджер проектов\n"
 
 def list_projects():
+    """
+    Вывод списка ID проектов
+
+    """
     projects = read_project_ids()
     if len(projects) > 0:
         for project_id in projects:
@@ -52,7 +56,24 @@ def list_projects():
     else:
         print("Проектов не найдено!")
 
+def list_tasks(project_id):
+    """
+    Вывод списка ID задач для заданного проекта
+
+    """
+    tasks = read_task_ids(project_id)
+    if len(tasks) > 0:
+        for task_id in tasks:
+            print(task_id)
+    else:
+        print("Задач не найдено!")
+
+
 def input_new_project_info(project_id):
+    """
+    Ввод нового проекта (внесение в индекс и заполнение данных)
+
+    """
     record = dict()
     for attribute in attributes_of_project:
         value = input(f"Введи значение для атрибута {attribute}: ")
@@ -60,9 +81,30 @@ def input_new_project_info(project_id):
     save_todo_info(project_id, record)
     add_project_id(project_id)
 
+
+def input_new_task_info(project_id, task_id):
+    """
+    Ввод новых данных по задаче
+
+    """
+    record = dict()
+    record['task_id'] = task_id
+    for attribute in attributes_of_task:
+        value = input(f"Введи значение для атрибута {attribute}: ")
+        record[attribute] = value
+    save_task_info(project_id, record)
+    add_task_id(project_id, task_id)
+
+
 def view_existing_project_info(project_id):
     record = read_todo_info(project_id)
     print(f"Сведения о проекте с ID {project_id}")
+    for key in record:
+        print(f"{key} : {record[key]}") 
+
+def view_existing_task_info(project_id, task_id):
+    record = read_task_info(project_id, task_id)
+    print(f"Сведения о задаче {task_id} проекта {project_id}")
     for key in record:
         print(f"{key} : {record[key]}") 
 
@@ -104,6 +146,9 @@ def main_menu():
     print("vP чтобы посмотреть проект")
     print("eP чтобы отредактировать проект")
     print("xP чтобы удалить проект")
+    print("+T чтобы добавить задачу в проект")
+    print("lT чтобы посмотреть список задач в проекте")
+    print("vT чтобы посмотреть параметры задачи проекта")
     action = input("выбери действие: ")
     return action
 
@@ -138,6 +183,17 @@ def dialog_mode():
                     list_projects
                 else:
                     print("Ничего не удалялось")
+            case "+T":
+                project_id = input("В какой проект добавлять:")
+                task_id = input("Придумайте ID для задачи:")
+                input_new_task_info(project_id, task_id)
+            case "lT":
+                project_id = input("Какой проект смотрим? : ")
+                list_tasks(project_id)
+            case "vT":
+                project_id = input("ID проекта: ")
+                task_id = input("ID задачи: ")
+                view_existing_task_info(project_id, task_id)
             case _:
                 print("Действие неизвестно!")
         wait_line()
@@ -193,6 +249,19 @@ def commandline_mode():
                 print("Should use project_id=projectId")
             else:
                 delete_project_totally(project_id)
+        case "+T":
+            project_id = get_project_id_from_commandline()
+            task_id = get_task_id_from_commandline()
+            record =  get_record_about_task_from_commandline(project_id, attributes_of_task)
+            record["task_id"] = task_id
+            save_task_info(project_id, record)
+        case "lT":
+            project_id = get_project_id_from_commandline()
+            list_tasks(project_id)
+        case "vT":
+            project_id = get_project_id_from_commandline()
+            task_id = get_task_id_from_commandline()
+            view_existing_task_info(project_id, task_id)
         case _:
             print("Unknown action")
 
