@@ -1,5 +1,5 @@
 from lib_nz_projects import *
-from lib_nz_todo import *
+from lib_nz_project_info import *
 from lib_nz_commandline import *
 import os
 import shutil
