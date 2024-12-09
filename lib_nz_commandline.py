@@ -63,7 +63,7 @@ def get_record_from_commandline(project_id, attributes):
     return record
 
 
-def get_record_about_task_from_commandline(project_id, attributes_of_task):
+def get_record_about_task_from_commandline(project_id, task_id, attributes_of_task):
     """
     Составляет словарь по командной строке
 

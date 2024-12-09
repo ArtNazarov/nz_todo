@@ -97,18 +97,30 @@ def input_new_task_info(project_id, task_id):
 
 
 def view_existing_project_info(project_id):
+    """
+    Просмотр информации по проекту
+    
+    """
     record = read_todo_info(project_id)
     print(f"Сведения о проекте с ID {project_id}")
     for key in record:
         print(f"{key} : {record[key]}") 
 
 def view_existing_task_info(project_id, task_id):
+    """
+    Просмотр информации по задаче
+
+    """
     record = read_task_info(project_id, task_id)
     print(f"Сведения о задаче {task_id} проекта {project_id}")
     for key in record:
         print(f"{key} : {record[key]}") 
 
 def edit_existing_project_info(project_id):
+    """
+    Правка данных о проекте
+    
+    """
     record = read_todo_info(project_id)
     for attribute in record.keys():
         print(f"{attribute} : {record[attribute]}");
@@ -118,7 +130,25 @@ def edit_existing_project_info(project_id):
             record[attribute] = value
     save_todo_info(project_id, record)
 
+def edit_existing_task_info(project_id, task_id):
+    """
+    Правка данных о задаче
+    
+    """
+    record = read_task_info(project_id, task_id)
+    for attribute in record.keys():
+        print(f"{attribute} : {record[attribute]}");
+        keep = input("Храним значение атрибута? [Y/n]:")
+        if (keep != "Y"):
+            value = input(f"Укажи новое значение для {attribute}: ")
+            record[attribute] = value
+    save_task_info(project_id, record)
+
 def delete_project_totally(project_id):
+    """
+    Удаление данных о проекте
+
+    """
     # удаляем ID проекта из индекса
     delete_project_id(project_id)
     # Путь к каталогу с данными
@@ -133,6 +163,10 @@ def delete_project_totally(project_id):
 
 
 def delete_task_totally(project_id, task_id):
+    """
+    Удаление данных о задаче
+
+    """
     # удаляем ID из индекса
     delete_task_id(project_id, task_id)
     # Путь к каталогу с данными
@@ -151,9 +185,17 @@ def delete_task_totally(project_id, task_id):
 
 
 def wait_line():
+    """
+    Пауза перед продолжением диалога
+
+    """
     key = input("Чтобы продолжить диалог - жми enter\n")
 
 def main_menu():
+    """
+    Главное меню диалогового режима с перечнем доступных команд
+
+    """
     clear_terminal()
     print(f"Путь к индексному файлу со списком проектов index.projects установлен в {index_path}")
     print("Выбери действие...")
@@ -174,6 +216,10 @@ def main_menu():
 
 # интерактивный режим
 def dialog_mode():
+    """
+    Цикл запрос - ответ для диалогового режима
+
+    """
     while True:
         clear_terminal()
         match main_menu().strip():
@@ -214,8 +260,8 @@ def dialog_mode():
                 task_id = input("ID задачи: ")
                 view_existing_task_info(project_id, task_id)
             case "xT":
-                project_id = input("ID проекта")
-                task_id = input("ID задачи")
+                project_id = input("ID проекта: ")
+                task_id = input("ID задачи: ")
                 delete_task_totally(project_id, task_id)
                 list_tasks(project_id)
             case _:
@@ -225,13 +271,18 @@ def dialog_mode():
 
 # режим командной строки
 def commandline_mode():
+    """
+    В режиме командной строки используются параметры в виде
+    код=значение
+    Для полей данных в виде .Поле=Значение
+    """
     match get_operation_from_commandline():
         case "":
-            print("Need opcode! Use opcode=lP|xP|eP|+P|+I|eI|vP")
+            print("Введи код операции! Доступны коды lP|xP|eP|+P|+I|eI|vP|+T|lT|xT|eT")
         case "+P":
             project_id = get_project_id_from_commandline()
             if (project_id == ""):
-                print("Should use project_id=projectId")
+                print("Нужен ID проекта project_id=projectId")
             else:
                 add_project_id(project_id)
         case "+I":
@@ -241,7 +292,7 @@ def commandline_mode():
             record = overwriteDict(initial_record, get_record_from_commandline(project_id, attributes_of_project))
             print(record)
             if (project_id == ""):
-                print("Should use project_id=projectId")
+                print("Нужен ID проекта project_id=projectId")
             else:
                 add_project_id(project_id)
                 save_todo_info(project_id, record)
@@ -255,7 +306,7 @@ def commandline_mode():
             print(new_record)
             record = overwriteDict(old_record, new_record)
             if (project_id == ""):
-                print("Should use project_id=projectId")
+                print("Нужен ID проекта project_id=projectId")
             else:
                 add_project_id(project_id)
                 save_todo_info(project_id, record)
@@ -264,19 +315,19 @@ def commandline_mode():
         case "vP":
             project_id = get_project_id_from_commandline()
             if (project_id == ""):
-                print("Should use project_id=projectId")
+                print("Нужен ID проекта project_id=projectId")
             else:
                 view_existing_project_info(project_id)
         case "xP":
             project_id = get_project_id_from_commandline()
             if (project_id == ""):
-                print("Should use project_id=projectId")
+                print("Нужен ID проекта project_id=projectId")
             else:
                 delete_project_totally(project_id)
         case "+T":
             project_id = get_project_id_from_commandline()
             task_id = get_task_id_from_commandline()
-            record =  get_record_about_task_from_commandline(project_id, attributes_of_task)
+            record =  get_record_about_task_from_commandline(project_id, task_id, attributes_of_task)
             record["task_id"] = task_id
             save_task_info(project_id, record)
         case "lT":
@@ -291,6 +342,21 @@ def commandline_mode():
             task_id = get_task_id_from_commandline()
             delete_task_totally(project_id, task_id)
             list_tasks(project_id)
+        case "eT":
+            project_id = get_project_id_from_commandline()
+            task_id = get_task_id_from_commandline()
+            empty_record = fill_empty_record("task")
+            old_record =  read_task_info(project_id, task_id) if (project_id != "" and task_id != "" and is_attributes_of_task_exists(project_id, task_id)) else empty_record
+            print(old_record)
+            new_record = get_record_about_task_from_commandline(project_id, task_id, attributes_of_task)
+            print(new_record)
+            record = overwriteDict(old_record, new_record)
+            if (project_id == ""):
+                print("Нужен ID проекта project_id=projectId и(или) ID задачи task_id=taskId")
+            else:
+                add_task_id(project_id, task_id)
+                save_task_info(project_id, record)
+        
         case _:
             print("Unknown action")
 
