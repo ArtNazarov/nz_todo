@@ -1,3 +1,5 @@
+from lib_nz_helpers import *
+from lib_nz_config_attributes import *
 from lib_nz_projects import *
 from lib_nz_project_info import *
 from lib_nz_commandline import *
@@ -8,39 +10,6 @@ from lib_nz_stdin_parse import *
 import os
 import shutil
 
-def overwriteDict(old_record, new_record):
-    use_keys = set()
-    for key in old_record.keys():
-        use_keys |= { key }
-    for key in new_record.keys():
-        use_keys |= { key }
-    record = dict()
-    for key in use_keys:
-        if key in new_record.keys():
-            record[key] = new_record[key]
-        else:
-            record[key] = old_record[key]
-    return record
-
-def clear_terminal():
-    os.system('clear')  # Для Linux и macOS
-
-
-current_path = get_cur_path()
-index_path = os.path.join(  current_path,  "index.projects")
-
-attributes_of_project = ("НазваниеПроекта", "ОписаниеПроекта", "СтатусПроекта")
-attributes_of_task = ("НазваниеЗадачи", "ОписаниеЗадачи", "ПриоритетЗадачи")
-
-
-def fill_empty_record(type_of_record):
-    attributes = attributes_of_task
-    if (type_of_record == "project"):
-        attributes = attributes_of_project
-    empty_record = dict()
-    for attr in attributes:
-        empty_record[attr] = ""
-    return empty_record
 
 def about():
     return "(c) Назаров А.А, Оренбург, 2024-2025\nterm_todos - простой менеджер проектов\n"
@@ -76,7 +45,7 @@ def input_new_project_info(project_id):
 
     """
     record = dict()
-    for attribute in attributes_of_project:
+    for attribute in attributes_of_project():
         value = input(f"Введи значение для атрибута {attribute}: ")
         record[attribute] = value
     save_todo_info(project_id, record)
@@ -90,7 +59,7 @@ def input_new_task_info(project_id, task_id):
     """
     record = dict()
     record['task_id'] = task_id
-    for attribute in attributes_of_task:
+    for attribute in attributes_of_task():
         value = input(f"Введи значение для атрибута {attribute}: ")
         record[attribute] = value
     save_task_info(project_id, record)
@@ -155,14 +124,13 @@ def delete_project_totally(project_id):
     # удаляем ID проекта из индекса
     delete_project_id(project_id)
     # Путь к каталогу с данными
-    project_folder = os.path.join(current_path, f"project_{project_id}")  
     # Проверяем, существует ли папка
-    if os.path.exists(project_folder):
+    if os.path.exists(project_folder(project_id)):
         # Удаляем папку и все её содержимое
-        shutil.rmtree(project_folder)
-        print(f"Данные о проекте удалены вместе с каталогом '{project_folder}' !")
+        shutil.rmtree(project_folder(project_id))
+        print(f"Данные о проекте удалены вместе с каталогом '{project_folder(project_id)}' !")
     else:
-        print(f"Каталога {project_folder} нет, удалять нечего")
+        print(f"Каталога {project_folder(project_id)} нет, удалять нечего")
 
 
 def delete_task_totally(project_id, task_id):
@@ -172,19 +140,13 @@ def delete_task_totally(project_id, task_id):
     """
     # удаляем ID из индекса
     delete_task_id(project_id, task_id)
-    # Путь к каталогу с данными
-    # print(f"Текущий путь: {get_cur_path()}")
-    project_folder = os.path.join(get_cur_path(), f"project_{project_id}")
-    # print(f"Путь к каталогу проекта: {project_folder}")
-    task_folder = os.path.join(project_folder, f"task_{task_id}")
-    # print(f"Удаление данных из {task_folder}")  
-    # Проверяем, существует ли папка
-    if os.path.exists(task_folder):
+     # Проверяем, существует ли папка
+    if os.path.exists(task_folder(project_id, task_id)):
         # Удаляем папку и все её содержимое
-        shutil.rmtree(task_folder)
-        print(f"Данные о проекте удалены вместе с каталогом '{task_folder}' !")
+        shutil.rmtree(task_folder(project_id, task_id))
+        print(f"Данные о проекте удалены вместе с каталогом '{task_folder(project_id, task_id)}' !")
     else:
-        print(f"Каталога {task_folder} нет, удалять нечего")
+        print(f"Каталога {task_folder(project_id, task_id)} нет, удалять нечего")
 
 
 def wait_line():
@@ -285,7 +247,8 @@ def commandline_mode():
     код=значение
     Для полей данных в виде .Поле=Значение
     """
-    match get_operation_from_commandline():
+    opcode = get_operation_from_commandline()
+    match opcode:
         case "":
             print("Введи код операции! Доступны коды lP|xP|eP|+P|+I|eI|vP|+T|lT|xT|eT")
         case "+P":
@@ -298,7 +261,7 @@ def commandline_mode():
             project_id = get_project_id_from_commandline()
             initial_record = fill_empty_record("project")
             save_todo_info(project_id, initial_record)
-            record = overwriteDict(initial_record, get_record_from_commandline(project_id, attributes_of_project))
+            record = overwriteDict(initial_record, get_record_from_commandline(project_id, attributes_of_project()))
             print(record)
             if (project_id == ""):
                 print("Нужен ID проекта project_id=projectId")
@@ -336,7 +299,7 @@ def commandline_mode():
         case "+T":
             project_id = get_project_id_from_commandline()
             task_id = get_task_id_from_commandline()
-            record =  get_record_about_task_from_commandline(project_id, task_id, attributes_of_task)
+            record =  get_record_about_task_from_commandline(project_id, task_id, attributes_of_task())
             record["task_id"] = task_id
             save_task_info(project_id, record)
         case "lT":
@@ -357,7 +320,7 @@ def commandline_mode():
             empty_record = fill_empty_record("task")
             old_record =  read_task_info(project_id, task_id) if (project_id != "" and task_id != "" and is_attributes_of_task_exists(project_id, task_id)) else empty_record
             print(old_record)
-            new_record = get_record_about_task_from_commandline(project_id, task_id, attributes_of_task)
+            new_record = get_record_about_task_from_commandline(project_id, task_id, attributes_of_task())
             print(new_record)
             record = overwriteDict(old_record, new_record)
             if (project_id == ""):
@@ -367,7 +330,7 @@ def commandline_mode():
                 save_task_info(project_id, record)
         
         case _:
-            print("Unknown action")
+            print(f"Неизвестное действие {opcode}")
 
 
 def pipe_mode():
@@ -397,7 +360,7 @@ def pipe_mode():
                 initial_record = fill_empty_record("project")
                 save_todo_info(project_id, initial_record)
                 given_record = dict()
-                for attr in attributes_of_project:
+                for attr in attributes_of_project():
                     given_record[attr] = statement[attr]
                 record = overwriteDict(initial_record, given_record)
                 print(record)
@@ -413,7 +376,7 @@ def pipe_mode():
                 old_record =  read_todo_info(project_id) if (project_id != "" and is_attributes_exists(project_id)) else empty_record
                 print(old_record)
                 given_record = dict()
-                for attr in attributes_of_project:
+                for attr in attributes_of_project():
                     given_record[attr] = statement[attr]
                 print(given_record)
                 record = overwriteDict(old_record, given_record)
@@ -442,7 +405,7 @@ def pipe_mode():
                 task_id = statement["task_id"]
                 empty_record = fill_empty_record("task")
                 given_record = dict()
-                for attr in attributes_of_task:
+                for attr in attributes_of_task():
                     if attr in statement.keys():
                         given_record[attr] = statement[attr]
                 record =  overwriteDict(empty_record, given_record)
@@ -465,7 +428,7 @@ def pipe_mode():
                 task_id = statement["task_id"]
                 empty_record = fill_empty_record("task")
                 given_record = dict()
-                for attr in attributes_of_task:
+                for attr in attributes_of_task():
                     if attr in statement.keys():
                         given_record[attr] = statement[attr]
                 old_record =  read_task_info(project_id, task_id) if (project_id != "" and task_id != "" and is_attributes_of_task_exists(project_id, task_id)) else empty_record
