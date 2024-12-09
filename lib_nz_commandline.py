@@ -35,6 +35,17 @@ def get_project_id_from_commandline():
             return sys.argv[i].split('=')[1]
     return ""
 
+def get_task_id_from_commandline():
+    """
+    Ищет id задачи в аргументах
+
+    """
+    n = len(sys.argv)
+    for i in range(1, n):
+        if "task_id=" in sys.argv[i]:
+            return sys.argv[i].split('=')[1]
+    return ""
+
 
 def get_record_from_commandline(project_id, attributes):
     """
@@ -74,3 +85,5 @@ def get_attributes_from_commandline():
             # Добавляем найденное значение в список результатов
             results.append(match.group(1))
     return results
+
+

@@ -1,11 +1,16 @@
-def add_project_id(index_path, project_id):
+from lib_nz_current_path import *
+
+def get_index_path():
+    return os.path.join(get_cur_path(), 'index.projects')
+
+def add_project_id(project_id):
     """
     Добавляет по указанному пути новый проект
 
     Параметры:
-    index_path (str): путь к индексу
     project_id (str): строковый ID проекта
     """
+    index_path = get_index_path()
     existing_ids = set()
 
     try:
@@ -30,12 +35,12 @@ def add_project_id(index_path, project_id):
                 
     
 
-def read_project_ids(file_path):
+def read_project_ids():
     """
     Возвращает список проектов по индексному файлу
 
-    file_path (str): путь к индексному файлу
     """
+    file_path = get_index_path()
     try:
         # открываем список ID 
         with open(file_path, 'r') as file:
@@ -47,14 +52,14 @@ def read_project_ids(file_path):
         return []
 
 
-def delete_project_id(index_path, project_id):
+def delete_project_id(project_id):
     """
     Удаляет указанный проект по его ID из файла.
 
     Параметры:
-    index_path (str): путь к индексу
     project_id (str): строковый ID проекта для удаления
     """
+    index_path = get_index_path()
     existing_ids = set()
 
     try:
@@ -83,4 +88,4 @@ def delete_project_id(index_path, project_id):
         print(f"Ошибка при записи в файл: {e}")
 
 # Пример использования
-# delete_project_id('path/to/index.projects', 'project_id_to_delete')
+# delete_project_id('project_id_to_delete')
