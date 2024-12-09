@@ -78,3 +78,26 @@ Use like:
 echo ' opcode = "+P" ; project_id="test" #  opcode = "lP" ' | python term_todos.py mode=pipe
 ```
 
+For example, create file 'Instructions.txt'
+
+```
+opcode = "+P" ; project_id="testProject" #
+opcode = "lP" #
+opcode = "xP" ; project_id="testProject" #
+opcode = "lP" 
+```
+
+Use it with cat
+```
+ cat Instructions.txt | python term_todos.py mode=pipe 
+```
+
+Will output:
+
+```
+Maybe new file: [Errno 2] No such file or directory: '/home/artem/nz_todo/index.projects'
+testProject
+Проект с ID 'testProject' успешно удалён.
+Каталога /home/artem/nz_todo/project_testProject нет, удалять нечего
+Проектов не найдено!
+```

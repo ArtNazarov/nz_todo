@@ -476,7 +476,7 @@ def pipe_mode():
                     save_task_info(project_id, record)
             
             case _:
-                print("Unknown action")
+                print(f"Unknown action {opcode}")
 
 
 # получаем режим программы

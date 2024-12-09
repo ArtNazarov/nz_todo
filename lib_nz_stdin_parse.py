@@ -8,7 +8,7 @@ def get_operations_list():
     operations = []
     # Читаем данные из stdin
     input_data = sys.stdin.read().strip()
-    
+
     # разбиваем на операторы
     statements = input_data.split('#')
 
