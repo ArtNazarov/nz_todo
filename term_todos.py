@@ -437,12 +437,14 @@ def pipe_mode():
                 else:
                     delete_project_totally(project_id)
             case "+T":
+                print(statement)
                 project_id = statement["project_id"]
                 task_id = statement["task_id"]
                 empty_record = fill_empty_record("task")
                 given_record = dict()
                 for attr in attributes_of_task:
-                    given_record[attr] = statement[attr]
+                    if attr in statement.keys():
+                        given_record[attr] = statement[attr]
                 record =  overwriteDict(empty_record, given_record)
                 record["task_id"] = task_id
                 save_task_info(project_id, record)
@@ -463,8 +465,9 @@ def pipe_mode():
                 task_id = statement["task_id"]
                 empty_record = fill_empty_record("task")
                 given_record = dict()
-                for attr in attributes_of_project:
-                    given_record[attr] = statement[attr]
+                for attr in attributes_of_task:
+                    if attr in statement.keys():
+                        given_record[attr] = statement[attr]
                 old_record =  read_task_info(project_id, task_id) if (project_id != "" and task_id != "" and is_attributes_of_task_exists(project_id, task_id)) else empty_record
                 print(old_record)
                 print(given_record)

@@ -19,7 +19,11 @@ def get_operations_list():
 
         for pair in pairs:
             list = pair.split('=')
-            operation[list[0].strip()] = list[1].replace('"', '').strip()
+            key = list[0].strip()
+            value = list[1].replace('"', '').strip()
+            if key[0] == ".":
+                key = key[1:]
+            operation[key] = value 
         operations.append(operation)
 
     return operations
