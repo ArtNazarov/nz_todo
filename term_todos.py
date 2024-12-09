@@ -137,6 +137,8 @@ def edit_existing_task_info(project_id, task_id):
     """
     record = read_task_info(project_id, task_id)
     for attribute in record.keys():
+        if attribute == "task_id":
+            continue
         print(f"{attribute} : {record[attribute]}");
         keep = input("Храним значение атрибута? [Y/n]:")
         if (keep != "Y"):
@@ -210,6 +212,7 @@ def main_menu():
     print("lT чтобы посмотреть список задач в проекте")
     print("vT чтобы посмотреть параметры задачи проекта")
     print("xT чтобы удалить задачу из проекта")
+    print("eT чтобы отредактировать задачу в проекте")
     action = input("выбери действие: ")
     return action
 
@@ -264,6 +267,11 @@ def dialog_mode():
                 task_id = input("ID задачи: ")
                 delete_task_totally(project_id, task_id)
                 list_tasks(project_id)
+            case "eT":
+                project_id = input("Укажи какой проект id отредактировать: ")
+                list_tasks(project_id)
+                task_id=input("Какую задачу id редактируем: ")
+                edit_existing_task_info(project_id, task_id)
             case _:
                 print("Действие неизвестно!")
         wait_line()
