@@ -132,6 +132,24 @@ def delete_project_totally(project_id):
         print(f"Каталога {project_folder} нет, удалять нечего")
 
 
+def delete_task_totally(project_id, task_id):
+    # удаляем ID из индекса
+    delete_task_id(project_id, task_id)
+    # Путь к каталогу с данными
+    # print(f"Текущий путь: {get_cur_path()}")
+    project_folder = os.path.join(get_cur_path(), f"project_{project_id}")
+    # print(f"Путь к каталогу проекта: {project_folder}")
+    task_folder = os.path.join(project_folder, f"task_{task_id}")
+    # print(f"Удаление данных из {task_folder}")  
+    # Проверяем, существует ли папка
+    if os.path.exists(task_folder):
+        # Удаляем папку и все её содержимое
+        shutil.rmtree(task_folder)
+        print(f"Данные о проекте удалены вместе с каталогом '{task_folder}' !")
+    else:
+        print(f"Каталога {task_folder} нет, удалять нечего")
+
+
 def wait_line():
     key = input("Чтобы продолжить диалог - жми enter\n")
 
@@ -149,6 +167,7 @@ def main_menu():
     print("+T чтобы добавить задачу в проект")
     print("lT чтобы посмотреть список задач в проекте")
     print("vT чтобы посмотреть параметры задачи проекта")
+    print("xT чтобы удалить задачу из проекта")
     action = input("выбери действие: ")
     return action
 
@@ -194,6 +213,11 @@ def dialog_mode():
                 project_id = input("ID проекта: ")
                 task_id = input("ID задачи: ")
                 view_existing_task_info(project_id, task_id)
+            case "xT":
+                project_id = input("ID проекта")
+                task_id = input("ID задачи")
+                delete_task_totally(project_id, task_id)
+                list_tasks(project_id)
             case _:
                 print("Действие неизвестно!")
         wait_line()
@@ -262,6 +286,11 @@ def commandline_mode():
             project_id = get_project_id_from_commandline()
             task_id = get_task_id_from_commandline()
             view_existing_task_info(project_id, task_id)
+        case "xT":
+            project_id = get_project_id_from_commandline()
+            task_id = get_task_id_from_commandline()
+            delete_task_totally(project_id, task_id)
+            list_tasks(project_id)
         case _:
             print("Unknown action")
 

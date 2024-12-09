@@ -24,7 +24,7 @@ def save_task_info(project_id, task_info):
     current_path = get_cur_path()
     add_task_id(project_id, task_id)
     task_info_path = get_task_info_path_by_id(project_id, task_id)
-    print(task_info_path);
+    # print(task_info_path);
 
     # Сохраним атрибуты в отдельные файлы
     for key, value in task_info.items():

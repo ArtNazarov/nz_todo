@@ -2,11 +2,13 @@ import os
 from lib_nz_current_path import *
 
 def get_tasks_index_path(project_id):
+    if not isinstance(project_id, str):
+        raise TypeError("Ожидалась строка, получен: {}".format(type(project_id).__name__))
     current_path = get_cur_path()
     tasks_path = os.path.join(current_path, f"project_{project_id}")
+    # print(f"Используется путь к индексу {tasks_path}")
     if not os.path.exists(tasks_path):
         os.makedirs(tasks_path)
-
     task_path_index = os.path.join(tasks_path, "index.tasks")
     return task_path_index
 
@@ -77,6 +79,7 @@ def delete_task_id(project_id, task_id):
     current_path = get_cur_path() 
     existing_ids = set()
     task_path_index = get_tasks_index_path(project_id)
+    # print(f"Удаление затронет файл индекса проекта {task_path_index}...")
     try:
         # Считаем существующие ID
         with open(task_path_index, 'r') as file:
