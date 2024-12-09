@@ -20,30 +20,29 @@ class TestTaskFunctions(unittest.TestCase):
         os.makedirs(self.tasks_path, exist_ok=True)
 
     def test_get_tasks_index_path(self):
-        
         project_path = os.path.join(self.current_path, f'project_{self.project_id}')
         tasks_index_path_expected = os.path.join(project_path, 'index.tasks')
-        tasks_index_path_fact =  get_tasks_index_path(self.current_path, self.project_id)
+        tasks_index_path_fact =  get_tasks_index_path(self.project_id)
         
         self.assertEqual(tasks_index_path_expected, tasks_index_path_fact )
     
     def test_add_task_id(self):
-        add_task_id(self.current_path, self.project_id, "1")
-        add_task_id(self.current_path, self.project_id, "2")
-        add_task_id(self.current_path, self.project_id, "3")
-        add_task_id(self.current_path, self.project_id, "4")
+        add_task_id(self.project_id, "1")
+        add_task_id(self.project_id, "2")
+        add_task_id(self.project_id, "3")
+        add_task_id(self.project_id, "4")
         linesExpected = [ "1", "2", "3", "4" ]
-        linesFact = read_task_ids(self.current_path, self.project_id)
+        linesFact = read_task_ids(self.project_id)
         self.assertEqual(linesExpected, linesFact)     
         
     def test_delete_task_id(self):
-        add_task_id(self.current_path, self.project_id, "1")
-        add_task_id(self.current_path, self.project_id, "2")
-        add_task_id(self.current_path, self.project_id, "3")
-        add_task_id(self.current_path, self.project_id, "4")
-        delete_task_id(self.current_path, self.project_id, "3")
+        add_task_id(self.project_id, "1")
+        add_task_id(self.project_id, "2")
+        add_task_id(self.project_id, "3")
+        add_task_id(self.project_id, "4")
+        delete_task_id(self.project_id, "3")
         linesExpected = [ "1", "2", "4" ]
-        linesFact = read_task_ids(self.current_path, self.project_id)
+        linesFact = read_task_ids(self.project_id)
         self.assertEqual(linesExpected, linesFact)
 
     def tearDown(self):

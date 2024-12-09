@@ -1,7 +1,8 @@
 import os
+from lib_nz_current_path import *
 
-
-def get_tasks_index_path(current_path, project_id):
+def get_tasks_index_path(project_id):
+    current_path = get_cur_path()
     tasks_path = os.path.join(current_path, f"project_{project_id}")
     if not os.path.exists(tasks_path):
         os.makedirs(tasks_path)
@@ -9,16 +10,17 @@ def get_tasks_index_path(current_path, project_id):
     task_path_index = os.path.join(tasks_path, "index.tasks")
     return task_path_index
 
-def add_task_id(current_path, project_id, task_id):
+
+def add_task_id(project_id, task_id):
     """
     Добавляет по указанному пути новый проект
 
     Параметры:
-    current_path (str): путь к индексу
     project_id (str): строковый ID проекта
     task_id (str): строковый ID задачи из проекта
     """
-    task_path_index = get_tasks_index_path(current_path, project_id)
+    current_path = get_cur_path()
+    task_path_index = get_tasks_index_path(project_id)
     
     existing_ids = set()
 
@@ -43,14 +45,15 @@ def add_task_id(current_path, project_id, task_id):
 
                 
 
-def read_task_ids(current_path, project_id):
+def read_task_ids(project_id):
     """
     Возвращает список проектов по индексному файлу
 
     index_path (str): путь к индексному файлу
     project_id (str): id проекта
     """
-    task_path_index = get_tasks_index_path(current_path, project_id)
+    current_path = get_cur_path()
+    task_path_index = get_tasks_index_path(project_id)
     try:
         # открываем список ID 
         with open(task_path_index, 'r') as file:
@@ -62,7 +65,7 @@ def read_task_ids(current_path, project_id):
         return []
 
 
-def delete_task_id(current_path, project_id, task_id):
+def delete_task_id(project_id, task_id):
     """
     Удаляет указанный проект по его ID из файла.
 
@@ -71,8 +74,9 @@ def delete_task_id(current_path, project_id, task_id):
     project_id (str): строковый ID проекта для удаления
     task_id (str): строкововый ID заметки
     """
+    current_path = get_cur_path() 
     existing_ids = set()
-    task_path_index = get_tasks_index_path(current_path, project_id)
+    task_path_index = get_tasks_index_path(project_id)
     try:
         # Считаем существующие ID
         with open(task_path_index, 'r') as file:
