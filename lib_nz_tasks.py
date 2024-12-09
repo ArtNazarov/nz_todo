@@ -101,13 +101,5 @@ def delete_task_id(current_path, project_id, task_id):
 # Пример использования
 # delete_task_id('path/to/index.projects', 'project_id', 'task_id_to_delete')
 
-current_path = os.path.dirname( os.path.realpath(__file__))
-add_task_id(current_path, "someProject", "1")
-add_task_id(current_path, "someProject", "2")
-add_task_id(current_path, "someProject", "3")
-add_task_id(current_path, "someProject", "4")
-print(read_task_ids(current_path, "someProject"))
-delete_task_id(current_path, "someProject", "3")
-print(read_task_ids(current_path, "someProject"))
 
 
