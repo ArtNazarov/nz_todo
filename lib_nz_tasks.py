@@ -32,7 +32,8 @@ def add_task_id(project_id, task_id):
             existing_ids = set(line.strip() for line in file)
 
     except Exception as e:
-        print(f"Maybe new file: {e}")
+        pass
+        # print(f"Maybe new file: {e}")
 
     # Добавим новую задачу
     existing_ids.add(str(task_id))
@@ -100,7 +101,7 @@ def delete_task_id(project_id, task_id):
         with open(task_path_index, 'w') as file:
             for task in sorted(existing_ids):
                 file.write(f"{task}\n")
-        print(f"Задача с ID '{task_id}' успешно удалёна.")
+        # print(f"Задача с ID '{task_id}' успешно удалёна.")
         
     except Exception as e:
         print(f"Ошибка при записи в файл: {e}")

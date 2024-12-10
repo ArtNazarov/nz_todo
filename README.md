@@ -2,6 +2,12 @@ About
 ===
 The simplest notes
 
+Running tests
+===
+```
+./tests.sh
+```
+
 Requirements
 ===
 prettytable
