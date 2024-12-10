@@ -1,14 +1,13 @@
 import sys
 
-def get_operations_list():
+def get_operations_list_inner(input_data):
     """
     Возвращает список операций, операции задаются словарями
     
     """
     operations = []
     # Читаем данные из stdin
-    input_data = sys.stdin.read().strip()
-
+ 
     # разбиваем на операторы
     statements = input_data.split('#')
 
@@ -28,3 +27,6 @@ def get_operations_list():
 
     return operations
 
+def get_operations_list():
+    input_data = sys.stdin.read().strip()
+    return get_operations_list_inner(input_data)
