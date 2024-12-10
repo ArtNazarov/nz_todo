@@ -220,12 +220,8 @@ def wait_line():
     """
     key = input("Чтобы продолжить диалог - жми enter\n")
 
-def main_menu():
-    """
-    Главное меню диалогового режима с перечнем доступных команд
 
-    """
-    clear_terminal()
+def dialog_help():
     print(f"Путь к индексному файлу со списком проектов index.projects установлен в {index_path()}")
     print("Выбери действие...")
     print("q для выхода")
@@ -242,6 +238,14 @@ def main_menu():
     print("vT чтобы посмотреть параметры задачи проекта")
     print("xT чтобы удалить задачу из проекта")
     print("eT чтобы отредактировать задачу в проекте")
+    print("mP - режим просмотра проектов")
+    print("mT - режим просмотра задач")
+
+def main_menu_prompt():
+    """
+    Главное меню диалогового режима с перечнем доступных команд
+
+    """
     action = input("выбери действие: ")
     return action
 
@@ -252,28 +256,48 @@ def dialog_mode():
     Цикл запрос - ответ для диалогового режима
 
     """
+    viewing = "projects"
+    last_project_id = ""
+    last_task_id = ""
     while True:
         clear_terminal()
-        match main_menu().strip():
+        print(f"Режим просмотра {viewing} Открывали проект {last_project_id} задачу {last_task_id}")
+        if viewing == "projects":
+            print("Список проектов:")
+            output_projects_view()
+        elif viewing == "tasks":
+            print("Список задач:")
+            output_tasks_view(last_project_id)
+        
+        match main_menu_prompt().strip():
             case "q":
                 break
             case "h":
-                print(about())    
+                print(about())
+                dialog_help()    
             case "lP":
                 list_projects()
+                viewing = "projects"
             case "LP":
                 output_projects_view()
+                viewing = "projects"
             case "+P":
                 project_id = input("Id для нового проекта:")
                 input_new_project_info(project_id)
                 list_projects()
+                last_project_id = project_id
+                viewing = "projects"
             case "vP":
                 project_id = input("Укажи какой id посмотреть:")
                 view_existing_project_info(project_id)
+                last_project_id = project_id
+                viewing = "projects"
             case "eP":
                 list_projects()
                 project_id = input("Укажи какой id отредактировать:")
                 edit_existing_project_info(project_id)
+                last_project_id = project_id
+                viewing = "projects"
             case "xP":
                 project_id = input("Укажи какой id удаляем: ")
                 confirm_id = input("Вы уверены? Введите еще раз имя проекта: ")
@@ -282,30 +306,54 @@ def dialog_mode():
                     list_projects
                 else:
                     print("Ничего не удалялось")
+                last_project_id = ""
+                viewing = "projects"
             case "+T":
                 project_id = input("В какой проект добавлять:")
                 task_id = input("Придумайте ID для задачи:")
                 input_new_task_info(project_id, task_id)
+                last_project_id = project_id
+                last_task_id = task_id
+                viewing = "tasks"
             case "lT":
                 project_id = input("Какой проект смотрим? : ")
                 list_tasks(project_id)
+                last_project_id = project_id
+                last_task_id = ""
+                viewing = "tasks"
             case "LT":
                 project_id = input("Какой проект смотрим? : ")
                 output_tasks_view(project_id)
+                last_project_id = project_id
+                last_task_id = ""
+                viewing = "tasks"
             case "vT":
                 project_id = input("ID проекта: ")
                 task_id = input("ID задачи: ")
                 view_existing_task_info(project_id, task_id)
+                last_project_id = project_id
+                last_task_id = task_id
+                viewing = "tasks"
             case "xT":
                 project_id = input("ID проекта: ")
                 task_id = input("ID задачи: ")
                 delete_task_totally(project_id, task_id)
                 list_tasks(project_id)
+                last_project_id = ""
+                last_task_id = ""
+                viewing = "tasks"
             case "eT":
                 project_id = input("Укажи какой проект id отредактировать: ")
                 list_tasks(project_id)
                 task_id=input("Какую задачу id редактируем: ")
                 edit_existing_task_info(project_id, task_id)
+                last_project_id = project_id
+                last_task_id = last_task_id
+                viewing = "tasks"
+            case "mP":
+                viewing = "projects"
+            case "mT":
+                viewing = "tasks"
             case _:
                 print("Действие неизвестно!")
         wait_line()
