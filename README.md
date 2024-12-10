@@ -7,6 +7,10 @@ Running tests
 ```
 ./tests.sh
 ```
+or
+```
+python run_tests.py
+```
 
 Requirements
 ===
