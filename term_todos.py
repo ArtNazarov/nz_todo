@@ -48,11 +48,26 @@ def extract_table_tasks_from_model(model, project_id, attrs_sequence):
         table.append(props)
     return table
 
+def filter_view(table, filter_on, filter_value):
+    if filter_on == False:
+        return table
+    if filter_value == "":
+        return table
+    filtered = []
+    for row in table:
+        flag_get_row = False
+        for cell in row:
+            if filter_value in cell:
+                flag_get_row = True
+        if flag_get_row:
+            filtered.append(row)
+    return filtered
+
 
 
 # ################# view #################
 
-def output_projects_view():
+def output_projects_view(filter_on, filter_value):
     """
     Вывод таблицы проектов
     """
@@ -60,10 +75,11 @@ def output_projects_view():
     projects = extract_table_projects_from_model(model, attributes_of_project()) # извлекаем проекты
     mytable = PrettyTable() # объект для отображения табллицы
     mytable.field_names = attributes_of_project() # используемые атрибуты
-    mytable.add_rows(projects) # добавление списка строк
+    filtered_view = filter_view(projects, filter_on, filter_value)
+    mytable.add_rows(filtered_view) # добавление списка строк
     print(mytable) # вывод
 
-def output_tasks_view(project_id):
+def output_tasks_view(project_id, filter_on, filter_value):
     """
     Вывод таблицы задачи
     """
@@ -71,7 +87,8 @@ def output_tasks_view(project_id):
     tasks = extract_table_tasks_from_model(model, project_id, attributes_of_task()) # извлекаем проекты
     mytable = PrettyTable() # объект для отображения табллицы
     mytable.field_names = attributes_of_task() # используемые атрибуты
-    mytable.add_rows(tasks) # добавление списка строк
+    filtered_view = filter_view(tasks, filter_on, filter_value)
+    mytable.add_rows(filtered_view) # добавление списка строк
     print(mytable) # вывод
 
 
@@ -240,6 +257,9 @@ def dialog_help():
     print("eT чтобы отредактировать задачу в проекте")
     print("mP - режим просмотра проектов")
     print("mT - режим просмотра задач")
+    print("+F - фильтр на данные (при совпадении отображать)")
+    print("-F - отмена фильтрации")
+
 
 def main_menu_prompt():
     """
@@ -259,15 +279,19 @@ def dialog_mode():
     viewing = "projects"
     last_project_id = ""
     last_task_id = ""
+    filter_on = False
+    filter_value = ""
     while True:
         clear_terminal()
+        about_filter = 'Включен' if filter_on else 'Выключен'
         print(f"Режим просмотра {viewing} Открывали проект {last_project_id} задачу {last_task_id}")
+        print(f"Фильтр:{ about_filter } Отображать, если совпадает с {filter_value} ")
         if viewing == "projects":
             print("Список проектов:")
-            output_projects_view()
+            output_projects_view(filter_on, filter_value)
         elif viewing == "tasks":
             print("Список задач:")
-            output_tasks_view(last_project_id)
+            output_tasks_view(last_project_id, filter_on, filter_value)
         
         match main_menu_prompt().strip():
             case "q":
@@ -279,7 +303,7 @@ def dialog_mode():
                 list_projects()
                 viewing = "projects"
             case "LP":
-                output_projects_view()
+                output_projects_view(filter_on, filter_value)
                 viewing = "projects"
             case "+P":
                 project_id = input("Id для нового проекта:")
@@ -323,7 +347,7 @@ def dialog_mode():
                 viewing = "tasks"
             case "LT":
                 project_id = input("Какой проект смотрим? : ")
-                output_tasks_view(project_id)
+                output_tasks_view(project_id, filter_on, filter_value)
                 last_project_id = project_id
                 last_task_id = ""
                 viewing = "tasks"
@@ -354,6 +378,11 @@ def dialog_mode():
                 viewing = "projects"
             case "mT":
                 viewing = "tasks"
+            case "+F":
+                filter_value = input("Введи значение фильтра : ")
+                filter_on = True
+            case "-F":
+                filter_on = False
             case _:
                 print("Действие неизвестно!")
         wait_line()
