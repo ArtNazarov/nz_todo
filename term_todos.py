@@ -7,8 +7,72 @@ from lib_nz_task_info import *
 from lib_nz_tasks import *
 from lib_nz_current_path import *
 from lib_nz_stdin_parse import *
+from prettytable import PrettyTable
 import os
 import shutil
+
+# ################ model ###################
+
+def load_full_model():
+    model = dict()
+    project_ids = read_project_ids()
+    for project_id in project_ids:
+        project_info = read_todo_info(project_id)
+        model[project_id] = dict()
+        model[project_id]['project_info'] = project_info
+        model[project_id]['task_list'] = [];
+        tasks = read_task_ids(project_id)
+        for task in tasks:
+            task = load_task_info(project_id, task_id)
+            model[project_id]["task_list"].append(task)
+    return model
+
+
+
+def extract_table_projects_from_model(model, attrs_sequence):
+    table = []
+    for project_id in model:
+        props = []
+        for attr in attrs_sequence:
+            props.append(model[project_id]['project_info'][attr])
+        table.append(props)
+    return table
+
+
+def extract_table_tasks_from_model(model, project_id, attrs_sequence):
+    table = []
+    for task in model[project_id]['task_list']:
+        props = []
+        for attr in attrs_sequence:
+            props.append(task[attr])
+        table.append(props)
+    return table
+
+
+
+# ################# view #################
+
+def output_projects_view():
+    """
+    Вывод таблицы проектов
+    """
+    model = load_full_model() # загружаем модель
+    projects = extract_table_projects_from_model(model, attributes_of_project()) # извлекаем проекты
+    mytable = PrettyTable() # объект для отображения табллицы
+    mytable.field_names = attributes_of_project() # используемые атрибуты
+    mytable.add_rows(projects) # добавление списка строк
+    print(mytable) # вывод
+
+def output_tasks_view(project_id):
+    """
+    Вывод таблицы задачи
+    """
+    model = load_full_model() # загружаем модель
+    tasks = extract_table_tasks_from_model(model, attributes_of_task()) # извлекаем проекты
+    mytable = PrettyTable() # объект для отображения табллицы
+    mytable.field_names = attributes_of_task() # используемые атрибуты
+    mytable.add_rows(tasks) # добавление списка строк
+    print(mytable) # вывод
 
 
 def about():
@@ -162,17 +226,19 @@ def main_menu():
 
     """
     clear_terminal()
-    print(f"Путь к индексному файлу со списком проектов index.projects установлен в {index_path}")
+    print(f"Путь к индексному файлу со списком проектов index.projects установлен в {index_path()}")
     print("Выбери действие...")
     print("q для выхода")
     print("h для сведений о программе")
     print("lP для списка проектов")
+    print("LP для списка проектов в табличной форме")
     print("+P для добавления проекта в список")
     print("vP чтобы посмотреть проект")
     print("eP чтобы отредактировать проект")
     print("xP чтобы удалить проект")
     print("+T чтобы добавить задачу в проект")
     print("lT чтобы посмотреть список задач в проекте")
+    print("LT для списка задача к проекту в табличной форме")
     print("vT чтобы посмотреть параметры задачи проекта")
     print("xT чтобы удалить задачу из проекта")
     print("eT чтобы отредактировать задачу в проекте")
@@ -195,6 +261,8 @@ def dialog_mode():
                 print(about())    
             case "lP":
                 list_projects()
+            case "LP":
+                output_projects_view()
             case "+P":
                 project_id = input("Id для нового проекта:")
                 input_new_project_info(project_id)
@@ -221,6 +289,9 @@ def dialog_mode():
             case "lT":
                 project_id = input("Какой проект смотрим? : ")
                 list_tasks(project_id)
+            case "LT":
+                project_id = input("Какой проект смотрим? : ")
+                output_tasks_view(project_id)
             case "vT":
                 project_id = input("ID проекта: ")
                 task_id = input("ID задачи: ")
