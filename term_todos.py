@@ -33,6 +33,7 @@ def extract_table_projects_from_model(model, attrs_sequence):
     table = []
     for project_id in model:
         props = []
+        props.append(project_id)
         for attr in attrs_sequence:
             props.append(model[project_id]['project_info'][attr])
         table.append(props)
@@ -42,7 +43,7 @@ def extract_table_projects_from_model(model, attrs_sequence):
 def extract_table_tasks_from_model(model, project_id, attrs_sequence):
     table = []
     for task in model[project_id]['task_list']:
-        props = []
+        props = [ 'task_id' ]
         for attr in attrs_sequence:
             props.append(task[attr])
         table.append(props)
@@ -74,7 +75,7 @@ def output_projects_view(filter_on, filter_value):
     model = load_full_model() # загружаем модель
     projects = extract_table_projects_from_model(model, attributes_of_project()) # извлекаем проекты
     mytable = PrettyTable() # объект для отображения табллицы
-    mytable.field_names = attributes_of_project() # используемые атрибуты
+    mytable.field_names = [ 'project_id' ] + list ( attributes_of_project() ) # используемые атрибуты
     filtered_view = filter_view(projects, filter_on, filter_value)
     mytable.add_rows(filtered_view) # добавление списка строк
     print(mytable) # вывод
@@ -84,9 +85,9 @@ def output_tasks_view(project_id, filter_on, filter_value):
     Вывод таблицы задачи
     """
     model = load_full_model() # загружаем модель
-    tasks = extract_table_tasks_from_model(model, project_id, attributes_of_task()) # извлекаем проекты
+    tasks = extract_table_tasks_from_model(model, project_id,  attributes_of_task() ) # извлекаем проекты
     mytable = PrettyTable() # объект для отображения табллицы
-    mytable.field_names = attributes_of_task() # используемые атрибуты
+    mytable.field_names = ['task_id'] + list( attributes_of_task() ) # используемые атрибуты
     filtered_view = filter_view(tasks, filter_on, filter_value)
     mytable.add_rows(filtered_view) # добавление списка строк
     print(mytable) # вывод
