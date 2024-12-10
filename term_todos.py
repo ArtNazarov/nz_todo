@@ -22,8 +22,8 @@ def load_full_model():
         model[project_id]['project_info'] = project_info
         model[project_id]['task_list'] = [];
         tasks = read_task_ids(project_id)
-        for task in tasks:
-            task = load_task_info(project_id, task_id)
+        for task_id in tasks:
+            task = read_task_info(project_id, task_id)
             model[project_id]["task_list"].append(task)
     return model
 
@@ -68,7 +68,7 @@ def output_tasks_view(project_id):
     Вывод таблицы задачи
     """
     model = load_full_model() # загружаем модель
-    tasks = extract_table_tasks_from_model(model, attributes_of_task()) # извлекаем проекты
+    tasks = extract_table_tasks_from_model(model, project_id, attributes_of_task()) # извлекаем проекты
     mytable = PrettyTable() # объект для отображения табллицы
     mytable.field_names = attributes_of_task() # используемые атрибуты
     mytable.add_rows(tasks) # добавление списка строк

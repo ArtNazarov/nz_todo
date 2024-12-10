@@ -39,18 +39,19 @@ def read_todo_info(project_id):
     todo_info = {}
 
     project_path = f"project_{project_id}"
-    
     # Проверим, что путь к проекту существует
     if os.path.exists(project_path):
         # Считываем атрибуты по файлам
         for filename in os.listdir(project_path):
-            key = filename.split('.')[1]  # Извлечем атрибут
-            # получаем имя файла
-            file_path = os.path.join(project_path, filename)
-            # откроем на считывание
-            with open(file_path, 'r') as file:
-                # забираем значение атрибута
-                todo_info[key] = file.read().strip()  # очищаем от строку слева и справа
+            # print(filename)
+            if not filename.startswith('task_') and filename != 'index.tasks':
+                key = filename.split('.')[1]  # Извлечем атрибут
+                # получаем имя файла
+                file_path = os.path.join(project_path, filename)
+                # откроем на считывание
+                with open(file_path, 'r') as file:
+                    # забираем значение атрибута
+                    todo_info[key] = file.read().strip()  # очищаем от строку слева и справа
                 
     return todo_info
 
