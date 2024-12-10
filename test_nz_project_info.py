@@ -1,4 +1,4 @@
-from lib_nz_todo import *
+from lib_nz_project_info import *
 import unittest
 
 class TestTodoFunctions(unittest.TestCase):
