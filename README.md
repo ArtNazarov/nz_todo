@@ -2,6 +2,16 @@ About
 ===
 The simplest notes
 
+Requirements
+===
+prettytable
+
+```
+python -m venv .
+source bin/activate
+pip install prettytable
+```
+
 Usage
 ===
 The dialog (interactive) mode
