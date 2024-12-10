@@ -2,7 +2,7 @@ import os
 from lib_nz_tasks import *
 from lib_nz_current_path import *
 
-def get_task_info_path_by_id(project_id, task_id):
+def get_task_info_path_by_id(project_id: str, task_id: str) -> str:
     current_path = get_cur_path()
     project_path = os.path.join(current_path, f"project_{project_id}")
     tasks_path = os.path.join(project_path, f"task_{task_id}")
@@ -11,7 +11,7 @@ def get_task_info_path_by_id(project_id, task_id):
     return tasks_path
 
 
-def save_task_info(project_id, task_info):
+def save_task_info(project_id: str, task_info: dict) -> None:
     """
     Сохраняет информацию о задаче в отдельных файлах
     
@@ -36,7 +36,7 @@ def save_task_info(project_id, task_info):
             file.write(value)
 
 
-def read_task_info(project_id, task_id):
+def read_task_info(project_id: str, task_id: str) -> dict:
     """
     Считывает информацию из файлов по ID
     
@@ -66,7 +66,7 @@ def read_task_info(project_id, task_id):
     return task_info
 
 
-def is_attributes_of_task_exists(project_id, task_id):
+def is_attributes_of_task_exists(project_id: str, task_id: str) -> bool:
     """
     Существует ли каталог с проектом    
     """
@@ -75,7 +75,7 @@ def is_attributes_of_task_exists(project_id, task_id):
     return os.path.exists(task_path)
 
 
-def get_attributes_of_task(project_id, task_id):
+def get_attributes_of_task(project_id: str, task_id: str) -> set:
     """
     Считывает атрибуты по файлам
     

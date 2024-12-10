@@ -1,7 +1,7 @@
 import os
 from lib_nz_current_path import *
 
-def get_tasks_index_path(project_id):
+def get_tasks_index_path(project_id: str) -> str:
     if not isinstance(project_id, str):
         raise TypeError("Ожидалась строка, получен: {}".format(type(project_id).__name__))
     current_path = get_cur_path()
@@ -13,7 +13,7 @@ def get_tasks_index_path(project_id):
     return task_path_index
 
 
-def add_task_id(project_id, task_id):
+def add_task_id(project_id: str, task_id: str) -> None:
     """
     Добавляет по указанному пути новый проект
 
@@ -48,7 +48,7 @@ def add_task_id(project_id, task_id):
 
                 
 
-def read_task_ids(project_id):
+def read_task_ids(project_id: str) -> list[str]:
     """
     Возвращает список проектов по индексному файлу
 
@@ -68,7 +68,7 @@ def read_task_ids(project_id):
         return []
 
 
-def delete_task_id(project_id, task_id):
+def delete_task_id(project_id: str, task_id: str) -> None:
     """
     Удаляет указанный проект по его ID из файла.
 
