@@ -13,14 +13,15 @@ import shutil
 
 # ################ model ###################
 
-def load_full_model():
+
+def load_full_model() -> dict:
     model = dict()
     project_ids = read_project_ids()
     for project_id in project_ids:
         project_info = read_todo_info(project_id)
         model[project_id] = dict()
         model[project_id]['project_info'] = project_info
-        model[project_id]['task_list'] = [];
+        model[project_id]['task_list'] = []
         tasks = read_task_ids(project_id)
         for task_id in tasks:
             task = read_task_info(project_id, task_id)
@@ -28,8 +29,7 @@ def load_full_model():
     return model
 
 
-
-def extract_table_projects_from_model(model, attrs_sequence):
+def extract_table_projects_from_model(model: dict, attrs_sequence: tuple[str, ...] | list[str]) -> list[list[str]]:
     table = []
     for project_id in model:
         props = []
@@ -40,16 +40,17 @@ def extract_table_projects_from_model(model, attrs_sequence):
     return table
 
 
-def extract_table_tasks_from_model(model, project_id, attrs_sequence):
+def extract_table_tasks_from_model(model: dict, project_id: str, attrs_sequence: tuple[str, ...] | list[str]) -> list[list[str]]:
     table = []
     for task in model[project_id]['task_list']:
-        props = [ 'task_id' ]
+        props = ['task_id']
         for attr in attrs_sequence:
             props.append(task[attr])
         table.append(props)
     return table
 
-def filter_view(table, filter_on, filter_value):
+
+def filter_view(table: list[list[str]], filter_on: bool, filter_value: str) -> list[list[str]]:
     if filter_on == False:
         return table
     if filter_value == "":
@@ -65,38 +66,43 @@ def filter_view(table, filter_on, filter_value):
     return filtered
 
 
-
 # ################# view #################
 
-def output_projects_view(filter_on, filter_value):
+def output_projects_view(filter_on: bool, filter_value: str) -> None:
     """
     Вывод таблицы проектов
     """
-    model = load_full_model() # загружаем модель
-    projects = extract_table_projects_from_model(model, attributes_of_project()) # извлекаем проекты
-    mytable = PrettyTable() # объект для отображения табллицы
-    mytable.field_names = [ 'project_id' ] + list ( attributes_of_project() ) # используемые атрибуты
+    model = load_full_model()  # загружаем модель
+    projects = extract_table_projects_from_model(
+        model, attributes_of_project())  # извлекаем проекты
+    mytable = PrettyTable()  # объект для отображения табллицы
+    mytable.field_names = ['project_id'] + \
+        list(attributes_of_project())  # используемые атрибуты
     filtered_view = filter_view(projects, filter_on, filter_value)
-    mytable.add_rows(filtered_view) # добавление списка строк
-    print(mytable) # вывод
+    mytable.add_rows(filtered_view)  # добавление списка строк
+    print(mytable)  # вывод
 
-def output_tasks_view(project_id, filter_on, filter_value):
+
+def output_tasks_view(project_id: str, filter_on: bool, filter_value: str):
     """
     Вывод таблицы задачи
     """
-    model = load_full_model() # загружаем модель
-    tasks = extract_table_tasks_from_model(model, project_id,  attributes_of_task() ) # извлекаем проекты
-    mytable = PrettyTable() # объект для отображения табллицы
-    mytable.field_names = ['task_id'] + list( attributes_of_task() ) # используемые атрибуты
+    model = load_full_model()  # загружаем модель
+    tasks = extract_table_tasks_from_model(
+        model, project_id,  attributes_of_task())  # извлекаем проекты
+    mytable = PrettyTable()  # объект для отображения табллицы
+    mytable.field_names = ['task_id'] + \
+        list(attributes_of_task())  # используемые атрибуты
     filtered_view = filter_view(tasks, filter_on, filter_value)
-    mytable.add_rows(filtered_view) # добавление списка строк
-    print(mytable) # вывод
+    mytable.add_rows(filtered_view)  # добавление списка строк
+    print(mytable)  # вывод
 
 
-def about():
+def about() -> str:
     return "(c) Назаров А.А, Оренбург, 2024-2025\nterm_todos - простой менеджер проектов\n"
 
-def list_projects():
+
+def list_projects() -> None:
     """
     Вывод списка ID проектов
 
@@ -108,7 +114,8 @@ def list_projects():
     else:
         print("Проектов не найдено!")
 
-def list_tasks(project_id):
+
+def list_tasks(project_id: str) -> None:
     """
     Вывод списка ID задач для заданного проекта
 
@@ -121,7 +128,7 @@ def list_tasks(project_id):
         print("Задач не найдено!")
 
 
-def input_new_project_info(project_id):
+def input_new_project_info(project_id: str) -> None:
     """
     Ввод нового проекта (внесение в индекс и заполнение данных)
 
@@ -134,7 +141,7 @@ def input_new_project_info(project_id):
     add_project_id(project_id)
 
 
-def input_new_task_info(project_id, task_id):
+def input_new_task_info(project_id: str, task_id: str) -> None:
     """
     Ввод новых данных по задаче
 
@@ -148,17 +155,18 @@ def input_new_task_info(project_id, task_id):
     add_task_id(project_id, task_id)
 
 
-def view_existing_project_info(project_id):
+def view_existing_project_info(project_id: str) -> None:
     """
     Просмотр информации по проекту
-    
+
     """
     record = read_todo_info(project_id)
     print(f"Сведения о проекте с ID {project_id}")
     for key in record:
-        print(f"{key} : {record[key]}") 
+        print(f"{key} : {record[key]}")
 
-def view_existing_task_info(project_id, task_id):
+
+def view_existing_task_info(project_id: str, task_id: str) -> None:
     """
     Просмотр информации по задаче
 
@@ -166,39 +174,42 @@ def view_existing_task_info(project_id, task_id):
     record = read_task_info(project_id, task_id)
     print(f"Сведения о задаче {task_id} проекта {project_id}")
     for key in record:
-        print(f"{key} : {record[key]}") 
+        print(f"{key} : {record[key]}")
 
-def edit_existing_project_info(project_id):
+
+def edit_existing_project_info(project_id: str) -> None:
     """
     Правка данных о проекте
-    
+
     """
     record = read_todo_info(project_id)
     for attribute in record.keys():
-        print(f"{attribute} : {record[attribute]}");
+        print(f"{attribute} : {record[attribute]}")
         keep = input("Храним значение атрибута? [Y/n]:")
         if (keep != "Y"):
             value = input(f"Укажи новое значение для {attribute}: ")
             record[attribute] = value
     save_todo_info(project_id, record)
 
-def edit_existing_task_info(project_id, task_id):
+
+def edit_existing_task_info(project_id: str, task_id: str) -> None:
     """
     Правка данных о задаче
-    
+
     """
     record = read_task_info(project_id, task_id)
     for attribute in record.keys():
         if attribute == "task_id":
             continue
-        print(f"{attribute} : {record[attribute]}");
+        print(f"{attribute} : {record[attribute]}")
         keep = input("Храним значение атрибута? [Y/n]:")
         if (keep != "Y"):
             value = input(f"Укажи новое значение для {attribute}: ")
             record[attribute] = value
     save_task_info(project_id, record)
 
-def delete_project_totally(project_id):
+
+def delete_project_totally(project_id: str) -> None:
     """
     Удаление данных о проекте
 
@@ -210,28 +221,31 @@ def delete_project_totally(project_id):
     if os.path.exists(project_folder(project_id)):
         # Удаляем папку и все её содержимое
         shutil.rmtree(project_folder(project_id))
-        print(f"Данные о проекте удалены вместе с каталогом '{project_folder(project_id)}' !")
+        print(f"Данные о проекте удалены вместе с каталогом '{
+              project_folder(project_id)}' !")
     else:
         print(f"Каталога {project_folder(project_id)} нет, удалять нечего")
 
 
-def delete_task_totally(project_id, task_id):
+def delete_task_totally(project_id: str, task_id: str) -> None:
     """
     Удаление данных о задаче
 
     """
     # удаляем ID из индекса
     delete_task_id(project_id, task_id)
-     # Проверяем, существует ли папка
+    # Проверяем, существует ли папка
     if os.path.exists(task_folder(project_id, task_id)):
         # Удаляем папку и все её содержимое
         shutil.rmtree(task_folder(project_id, task_id))
-        print(f"Данные о проекте удалены вместе с каталогом '{task_folder(project_id, task_id)}' !")
+        print(f"Данные о проекте удалены вместе с каталогом '{
+              task_folder(project_id, task_id)}' !")
     else:
-        print(f"Каталога {task_folder(project_id, task_id)} нет, удалять нечего")
+        print(f"Каталога {task_folder(
+            project_id, task_id)} нет, удалять нечего")
 
 
-def wait_line():
+def wait_line() -> None:
     """
     Пауза перед продолжением диалога
 
@@ -239,8 +253,9 @@ def wait_line():
     key = input("Чтобы продолжить диалог - жми enter\n")
 
 
-def dialog_help():
-    print(f"Путь к индексному файлу со списком проектов index.projects установлен в {index_path()}")
+def dialog_help() -> None:
+    print(f"Путь к индексному файлу со списком проектов index.projects установлен в {
+          index_path()}")
     print("Выбери действие...")
     print("q для выхода")
     print("h для сведений о программе")
@@ -262,7 +277,7 @@ def dialog_help():
     print("-F - отмена фильтрации")
 
 
-def main_menu_prompt():
+def main_menu_prompt() -> str:
     """
     Главное меню диалогового режима с перечнем доступных команд
 
@@ -272,7 +287,7 @@ def main_menu_prompt():
 
 
 # интерактивный режим
-def dialog_mode():
+def dialog_mode() -> None:
     """
     Цикл запрос - ответ для диалогового режима
 
@@ -285,21 +300,23 @@ def dialog_mode():
     while True:
         clear_terminal()
         about_filter = 'Включен' if filter_on else 'Выключен'
-        print(f"Режим просмотра {viewing} Открывали проект {last_project_id} задачу {last_task_id}")
-        print(f"Фильтр:{ about_filter } Отображать, если совпадает с {filter_value} ")
+        print(f"Режим просмотра {viewing} Открывали проект {
+              last_project_id} задачу {last_task_id}")
+        print(f"Фильтр:{about_filter} Отображать, если совпадает с {
+              filter_value} ")
         if viewing == "projects":
             print("Список проектов:")
             output_projects_view(filter_on, filter_value)
         elif viewing == "tasks":
             print("Список задач:")
             output_tasks_view(last_project_id, filter_on, filter_value)
-        
+
         match main_menu_prompt().strip():
             case "q":
                 break
             case "h":
                 print(about())
-                dialog_help()    
+                dialog_help()
             case "lP":
                 list_projects()
                 viewing = "projects"
@@ -370,7 +387,7 @@ def dialog_mode():
             case "eT":
                 project_id = input("Укажи какой проект id отредактировать: ")
                 list_tasks(project_id)
-                task_id=input("Какую задачу id редактируем: ")
+                task_id = input("Какую задачу id редактируем: ")
                 edit_existing_task_info(project_id, task_id)
                 last_project_id = project_id
                 last_task_id = last_task_id
@@ -390,7 +407,7 @@ def dialog_mode():
 
 
 # режим командной строки
-def commandline_mode():
+def commandline_mode() -> None:
     """
     В режиме командной строки используются параметры в виде
     код=значение
@@ -410,20 +427,23 @@ def commandline_mode():
             project_id = get_project_id_from_commandline()
             initial_record = fill_empty_record("project")
             save_todo_info(project_id, initial_record)
-            record = overwriteDict(initial_record, get_record_from_commandline(project_id, attributes_of_project()))
+            record = overwriteDict(initial_record, get_record_from_commandline(
+                project_id, attributes_of_project()))
             print(record)
             if (project_id == ""):
                 print("Нужен ID проекта project_id=projectId")
             else:
                 add_project_id(project_id)
                 save_todo_info(project_id, record)
-        case "eI": 
+        case "eI":
             # overwrite attrs
             project_id = get_project_id_from_commandline()
             empty_record = fill_empty_record("project")
-            old_record =  read_todo_info(project_id) if (project_id != "" and is_attributes_exists(project_id)) else empty_record
+            old_record = read_todo_info(project_id) if (
+                project_id != "" and is_attributes_exists(project_id)) else empty_record
             print(old_record)
-            new_record = get_record_from_commandline(project_id,  get_attributes_from_commandline())
+            new_record = get_record_from_commandline(
+                project_id,  get_attributes_from_commandline())
             print(new_record)
             record = overwriteDict(old_record, new_record)
             if (project_id == ""):
@@ -448,7 +468,8 @@ def commandline_mode():
         case "+T":
             project_id = get_project_id_from_commandline()
             task_id = get_task_id_from_commandline()
-            record =  get_record_about_task_from_commandline(project_id, task_id, attributes_of_task())
+            record = get_record_about_task_from_commandline(
+                project_id, task_id, attributes_of_task())
             record["task_id"] = task_id
             save_task_info(project_id, record)
         case "lT":
@@ -467,22 +488,25 @@ def commandline_mode():
             project_id = get_project_id_from_commandline()
             task_id = get_task_id_from_commandline()
             empty_record = fill_empty_record("task")
-            old_record =  read_task_info(project_id, task_id) if (project_id != "" and task_id != "" and is_attributes_of_task_exists(project_id, task_id)) else empty_record
+            old_record = read_task_info(project_id, task_id) if (
+                project_id != "" and task_id != "" and is_attributes_of_task_exists(project_id, task_id)) else empty_record
             print(old_record)
-            new_record = get_record_about_task_from_commandline(project_id, task_id, attributes_of_task())
+            new_record = get_record_about_task_from_commandline(
+                project_id, task_id, attributes_of_task())
             print(new_record)
             record = overwriteDict(old_record, new_record)
             if (project_id == ""):
-                print("Нужен ID проекта project_id=projectId и(или) ID задачи task_id=taskId")
+                print(
+                    "Нужен ID проекта project_id=projectId и(или) ID задачи task_id=taskId")
             else:
                 add_task_id(project_id, task_id)
                 save_task_info(project_id, record)
-        
+
         case _:
             print(f"Неизвестное действие {opcode}")
 
 
-def pipe_mode():
+def pipe_mode() -> None:
     # режим конвеера
     """
     В режиме конвеера входные данных берутся из потока ввода 
@@ -497,7 +521,8 @@ def pipe_mode():
         opcode = statement["opcode"]
         match opcode:
             case "":
-                print("Введи код операции! Доступны коды lP|xP|eP|+P|+I|eI|vP|+T|lT|xT|eT")
+                print(
+                    "Введи код операции! Доступны коды lP|xP|eP|+P|+I|eI|vP|+T|lT|xT|eT")
             case "+P":
                 project_id = statement["project_id"]
                 if (project_id == ""):
@@ -518,11 +543,12 @@ def pipe_mode():
                 else:
                     add_project_id(project_id)
                     save_todo_info(project_id, record)
-            case "eI": 
+            case "eI":
                 # overwrite attrs
                 project_id = statement["project_id"]
                 empty_record = fill_empty_record("project")
-                old_record =  read_todo_info(project_id) if (project_id != "" and is_attributes_exists(project_id)) else empty_record
+                old_record = read_todo_info(project_id) if (
+                    project_id != "" and is_attributes_exists(project_id)) else empty_record
                 print(old_record)
                 given_record = dict()
                 for attr in attributes_of_project():
@@ -557,7 +583,7 @@ def pipe_mode():
                 for attr in attributes_of_task():
                     if attr in statement.keys():
                         given_record[attr] = statement[attr]
-                record =  overwriteDict(empty_record, given_record)
+                record = overwriteDict(empty_record, given_record)
                 record["task_id"] = task_id
                 save_task_info(project_id, record)
             case "lT":
@@ -580,27 +606,29 @@ def pipe_mode():
                 for attr in attributes_of_task():
                     if attr in statement.keys():
                         given_record[attr] = statement[attr]
-                old_record =  read_task_info(project_id, task_id) if (project_id != "" and task_id != "" and is_attributes_of_task_exists(project_id, task_id)) else empty_record
+                old_record = read_task_info(project_id, task_id) if (
+                    project_id != "" and task_id != "" and is_attributes_of_task_exists(project_id, task_id)) else empty_record
                 print(old_record)
                 print(given_record)
                 record = overwriteDict(old_record, given_record)
                 if (project_id == ""):
-                    print("Нужен ID проекта project_id=projectId и(или) ID задачи task_id=taskId")
+                    print(
+                        "Нужен ID проекта project_id=projectId и(или) ID задачи task_id=taskId")
                 else:
                     add_task_id(project_id, task_id)
                     save_task_info(project_id, record)
-            
+
             case _:
                 print(f"Unknown action {opcode}")
 
 
 # получаем режим программы
 mode = get_mode_from_commandline()
-if (mode == "pipe"): # в режиме конвеера
+if (mode == "pipe"):  # в режиме конвеера
     pipe_mode()
-elif (mode == "dialog"): # если в диалоговом
+elif (mode == "dialog"):  # если в диалоговом
     dialog_mode()
-elif (mode == "commandline"): # если в командном
+elif (mode == "commandline"):  # если в командном
     commandline_mode()
-else: # неизвестный режим
+else:  # неизвестный режим
     print("Unknown mode! Use mode=dialog or mode=commandline")
