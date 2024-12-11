@@ -1,10 +1,11 @@
-def attributes_of_project():
+def attributes_of_project() -> tuple[str, ...]:
     """
     Настройки - названия отслеживаемых атрибутов у проектов 
     """
     return ("НазваниеПроекта", "ОписаниеПроекта", "СтатусПроекта")
 
-def attributes_of_task():
+
+def attributes_of_task() -> tuple[str, ...]:
     """
     Настройки - название отслеживаемых атрибутов у задач
     """
