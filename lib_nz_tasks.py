@@ -1,18 +1,5 @@
-import os
-from lib_nz_current_path import *
-
-
-def get_tasks_index_path(project_id: str) -> str:
-    if not isinstance(project_id, str):
-        raise TypeError("Ожидалась строка, получен: {}".format(
-            type(project_id).__name__))
-    current_path = get_cur_path()
-    tasks_path = os.path.join(current_path, f"project_{project_id}")
-    # print(f"Используется путь к индексу {tasks_path}")
-    if not os.path.exists(tasks_path):
-        os.makedirs(tasks_path)
-    task_path_index = os.path.join(tasks_path, "index.tasks")
-    return task_path_index
+import sys
+from lib_nz_current_path import get_tasks_index_path
 
 
 def add_task_id(project_id: str, task_id: str) -> None:
@@ -23,30 +10,31 @@ def add_task_id(project_id: str, task_id: str) -> None:
     project_id (str): строковый ID проекта
     task_id (str): строковый ID задачи из проекта
     """
-    current_path = get_cur_path()
     task_path_index = get_tasks_index_path(project_id)
 
     existing_ids = set()
 
     try:
         # Считаем существующие ID
-        with open(task_path_index, 'r') as file:
+        with open(task_path_index, 'r', encoding='utf-8') as file:
             existing_ids = set(line.strip() for line in file)
 
-    except Exception as e:
-        pass
-        # print(f"Maybe new file: {e}")
+    except FileNotFoundError as e:
+        print(f"Maybe new file: {e}", file=sys.stderr)
 
     # Добавим новую задачу
     existing_ids.add(str(task_id))
 
     try:
         # Отсортируем и запишем в отсортированном виде
-        with open(task_path_index, 'w') as file:
+        with open(task_path_index, 'w', encoding='utf-8') as file:
             for task_id in sorted(existing_ids):
                 file.write(f"{task_id}\n")
-    except Exception as e:
-        print(f"Error: {e}")
+    except PermissionError:
+        print(f"Error: Permission denied when trying to write to '{
+              task_path_index}'.", file=sys.stderr)
+    except OSError as e:
+        print(f"Error: An OS error occurred: {e}", file=sys.stderr)
 
 
 def read_task_ids(project_id: str) -> list[str]:
@@ -56,16 +44,15 @@ def read_task_ids(project_id: str) -> list[str]:
     index_path (str): путь к индексному файлу
     project_id (str): id проекта
     """
-    current_path = get_cur_path()
     task_path_index = get_tasks_index_path(project_id)
     try:
         # открываем список ID
-        with open(task_path_index, 'r') as file:
+        with open(task_path_index, 'r', encoding='utf-8') as file:
             # забираем список в упорядоченном виде
             task_ids = sorted(set(line.strip() for line in file))
         return task_ids
-    except Exception as e:
-        # print(f"Error: {e}")
+    except FileNotFoundError as e:
+        print(f"Error: {e}", file=sys.stderr)
         return []
 
 
@@ -78,34 +65,35 @@ def delete_task_id(project_id: str, task_id: str) -> None:
     project_id (str): строковый ID проекта для удаления
     task_id (str): строкововый ID заметки
     """
-    current_path = get_cur_path()
     existing_ids = set()
     task_path_index = get_tasks_index_path(project_id)
     # print(f"Удаление затронет файл индекса проекта {task_path_index}...")
     try:
         # Считаем существующие ID
-        with open(task_path_index, 'r') as file:
+        with open(task_path_index, 'r+', encoding='utf-8') as file:
             existing_ids = set(line.strip() for line in file)
 
     except FileNotFoundError:
-        print("Файл не найден. Убедитесь, что путь указан правильно.")
-        return
-    except Exception as e:
-        print(f"Ошибка при чтении файла: {e}")
-        return
+        print("Файл не найден. Убедитесь, что путь указан правильно.",
+              file=sys.stderr)
 
     # Удалим проект, если он существует
     existing_ids.discard(str(task_id))
 
     try:
         # Отсортируем и запишем в отсортированном виде
-        with open(task_path_index, 'w') as file:
+        with open(task_path_index, 'w', encoding='utf-8') as file:
             for task in sorted(existing_ids):
                 file.write(f"{task}\n")
         # print(f"Задача с ID '{task_id}' успешно удалёна.")
-
-    except Exception as e:
-        print(f"Ошибка при записи в файл: {e}")
+    except FileNotFoundError:
+        print(f"Error: The file path '{
+              task_path_index}' was not found.", file=sys.stderr)
+    except PermissionError:
+        print(f"Error: Permission denied when trying to write to '{
+              task_path_index}'.", file=sys.stderr)
+    except OSError as e:
+        print(f"Error: An OS error occurred: {e}", file=sys.stderr)
 
 # Пример использования
 # delete_task_id('path/to/index.projects', 'project_id', 'task_id_to_delete')

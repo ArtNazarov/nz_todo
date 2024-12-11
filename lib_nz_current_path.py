@@ -34,3 +34,13 @@ def task_folder(project_id: str, task_id: str) -> str:
     Путь к каталогу определенной задачи
     """
     return os.path.join(project_folder(project_id), f"task_{task_id}")
+
+
+def get_tasks_index_path(project_id: str) -> str:
+    """
+    Возвращает путь к файлу index.tasks
+
+    Args:
+        project_id (str): ID проекта
+    """
+    return os.path.join(project_folder(project_id), 'index.tasks')
