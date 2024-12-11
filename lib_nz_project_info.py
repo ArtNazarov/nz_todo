@@ -1,10 +1,10 @@
 import os
 
 
-def save_todo_info(project_id, todo_info):
+def save_todo_info(project_id: str, todo_info: dict[str, str]) -> None:
     """
     Сохраняет информацию о задаче в отдельных файлах
-    
+
     Параметры:
     project_id (str): Уникальный строковый ID проекта
     todo_info (dict): Словарь ключ-значение, где ключи - атрибуты заметки (caption, description, priority).
@@ -26,13 +26,13 @@ def save_todo_info(project_id, todo_info):
             file.write(value)
 
 
-def read_todo_info(project_id):
+def read_todo_info(project_id: str) -> dict[str, str]:
     """
     Считывает информацию из файлов по ID
-    
+
     Параметры:
     project_id (str): Уникальный ID проектов
-    
+
     Возвращает:
     dict: Словарь ключ-значение, информация по ключам извлекается из файлов
     """
@@ -51,12 +51,13 @@ def read_todo_info(project_id):
                 # откроем на считывание
                 with open(file_path, 'r') as file:
                     # забираем значение атрибута
-                    todo_info[key] = file.read().strip()  # очищаем от строку слева и справа
-                
+                    # очищаем от строку слева и справа
+                    todo_info[key] = file.read().strip()
+
     return todo_info
 
 
-def is_attributes_exists(project_id):
+def is_attributes_exists(project_id: str) -> bool:
     """
     Существует ли каталог с проектом    
     """
@@ -65,25 +66,25 @@ def is_attributes_exists(project_id):
     return os.path.exists(project_path)
 
 
-def get_attributes_of_project(project_id):
+def get_attributes_of_project(project_id: str) -> set[str]:
     """
     Считывает атрибуты по файлам
-    
+
     Параметры:
     project_id (str): Уникальный ID проектов
-    
+
     Возвращает:
     set: Множество атрибутов
     """
     attrs = set()
 
     project_path = f"project_{project_id}"
-    
+
     # Проверим, что путь к проекту существует
     if is_attributes_exists(project_id):
         # Считываем атрибуты по файлам
         for filename in os.listdir(project_path):
             key = filename.split('.')[1]  # Извлечем атрибут
-            attrs|= { key }
-        
+            attrs |= {key}
+
     return attrs
