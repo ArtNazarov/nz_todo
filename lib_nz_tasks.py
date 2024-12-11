@@ -1,9 +1,11 @@
 import os
 from lib_nz_current_path import *
 
+
 def get_tasks_index_path(project_id: str) -> str:
     if not isinstance(project_id, str):
-        raise TypeError("Ожидалась строка, получен: {}".format(type(project_id).__name__))
+        raise TypeError("Ожидалась строка, получен: {}".format(
+            type(project_id).__name__))
     current_path = get_cur_path()
     tasks_path = os.path.join(current_path, f"project_{project_id}")
     # print(f"Используется путь к индексу {tasks_path}")
@@ -23,7 +25,7 @@ def add_task_id(project_id: str, task_id: str) -> None:
     """
     current_path = get_cur_path()
     task_path_index = get_tasks_index_path(project_id)
-    
+
     existing_ids = set()
 
     try:
@@ -37,7 +39,7 @@ def add_task_id(project_id: str, task_id: str) -> None:
 
     # Добавим новую задачу
     existing_ids.add(str(task_id))
-    
+
     try:
         # Отсортируем и запишем в отсортированном виде
         with open(task_path_index, 'w') as file:
@@ -46,7 +48,6 @@ def add_task_id(project_id: str, task_id: str) -> None:
     except Exception as e:
         print(f"Error: {e}")
 
-                
 
 def read_task_ids(project_id: str) -> list[str]:
     """
@@ -58,7 +59,7 @@ def read_task_ids(project_id: str) -> list[str]:
     current_path = get_cur_path()
     task_path_index = get_tasks_index_path(project_id)
     try:
-        # открываем список ID 
+        # открываем список ID
         with open(task_path_index, 'r') as file:
             # забираем список в упорядоченном виде
             task_ids = sorted(set(line.strip() for line in file))
@@ -77,7 +78,7 @@ def delete_task_id(project_id: str, task_id: str) -> None:
     project_id (str): строковый ID проекта для удаления
     task_id (str): строкововый ID заметки
     """
-    current_path = get_cur_path() 
+    current_path = get_cur_path()
     existing_ids = set()
     task_path_index = get_tasks_index_path(project_id)
     # print(f"Удаление затронет файл индекса проекта {task_path_index}...")
@@ -102,12 +103,9 @@ def delete_task_id(project_id: str, task_id: str) -> None:
             for task in sorted(existing_ids):
                 file.write(f"{task}\n")
         # print(f"Задача с ID '{task_id}' успешно удалёна.")
-        
+
     except Exception as e:
         print(f"Ошибка при записи в файл: {e}")
 
 # Пример использования
 # delete_task_id('path/to/index.projects', 'project_id', 'task_id_to_delete')
-
-
-
