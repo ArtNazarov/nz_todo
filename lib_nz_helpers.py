@@ -3,15 +3,16 @@ from lib_nz_current_path import *
 
 import os
 
-def overwriteDict(old_record, new_record):
+
+def overwriteDict(old_record: dict[str, str], new_record: dict[str, str]) -> dict[str, str]:
     """
     Перезаписывает значениями новой записи значения старой
     """
     use_keys = set()
     for key in old_record.keys():
-        use_keys |= { key }
+        use_keys |= {key}
     for key in new_record.keys():
-        use_keys |= { key }
+        use_keys |= {key}
     record = dict()
     for key in use_keys:
         if key in new_record.keys():
@@ -20,6 +21,7 @@ def overwriteDict(old_record, new_record):
             record[key] = old_record[key]
     return record
 
+
 def clear_terminal():
     """
     Очистка терминала
@@ -27,7 +29,7 @@ def clear_terminal():
     os.system('clear')  # Для Linux и macOS
 
 
-def fill_empty_record(type_of_record):
+def fill_empty_record(type_of_record: str) -> dict[str, str]:
     """
     В зависимости от типа (проект или задача) заполняет словарь
     """
@@ -38,4 +40,3 @@ def fill_empty_record(type_of_record):
     for attr in attributes:
         empty_record[attr] = ""
     return empty_record
-
