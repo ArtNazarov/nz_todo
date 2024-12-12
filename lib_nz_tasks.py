@@ -16,7 +16,7 @@ def add_task_id(project_id: str, task_id: str) -> None:
 
     try:
         # Считаем существующие ID
-        with open(task_path_index, 'r', encoding='utf-8') as file:
+        with open(task_path_index, 'r+', encoding='utf-8') as file:
             existing_ids = set(line.strip() for line in file)
 
     except FileNotFoundError as e:
