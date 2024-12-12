@@ -1,3 +1,4 @@
+""" Модуль с функциями диалогового режима """
 import os
 import shutil
 
@@ -97,7 +98,7 @@ def edit_existing_project_info(project_id: str) -> None:
     for attribute in record.keys():
         print(f"{attribute} : {record[attribute]}")
         keep = input("Храним значение атрибута? [Y/n]:")
-        if (keep != "Y"):
+        if keep != "Y":
             value = input(f"Укажи новое значение для {attribute}: ")
             record[attribute] = value
     save_todo_info(project_id, record)
@@ -114,7 +115,7 @@ def edit_existing_task_info(project_id: str, task_id: str) -> None:
             continue
         print(f"{attribute} : {record[attribute]}")
         keep = input("Храним значение атрибута? [Y/n]:")
-        if (keep != "Y"):
+        if keep != "Y":
             value = input(f"Укажи новое значение для {attribute}: ")
             record[attribute] = value
     save_task_info(project_id, record)
@@ -157,6 +158,7 @@ def delete_task_totally(project_id: str, task_id: str) -> None:
 
 
 def dialog_help() -> None:
+    """ Справка о функция программы в диалоговом режиме """
     print(f"Путь к индексному файлу со списком проектов index.projects установлен в {
           index_path()}")
     print("Выбери действие...")
@@ -245,9 +247,9 @@ def dialog_mode() -> None:
             case "xP":
                 project_id = input("Укажи какой id удаляем: ")
                 confirm_id = input("Вы уверены? Введите еще раз имя проекта: ")
-                if (confirm_id == project_id):
+                if confirm_id == project_id:
                     delete_project_totally(project_id)
-                    list_projects
+                    list_projects()
                 else:
                     print("Ничего не удалялось")
                 last_project_id = ""
@@ -292,7 +294,7 @@ def dialog_mode() -> None:
                 task_id = input("Какую задачу id редактируем: ")
                 edit_existing_task_info(project_id, task_id)
                 last_project_id = project_id
-                last_task_id = last_task_id
+                last_task_id = task_id
                 viewing = "tasks"
             case "mP":
                 viewing = "projects"
@@ -306,6 +308,3 @@ def dialog_mode() -> None:
             case _:
                 print("Действие неизвестно!")
         wait_line()
-
-
-
