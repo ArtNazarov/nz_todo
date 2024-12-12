@@ -1,6 +1,4 @@
-import os
-import shutil
-
+""" Модуль с функциями для режима конвеера """
 from lib_nz_projects import *
 from lib_nz_tasks import *
 from lib_nz_helpers import *
@@ -15,10 +13,11 @@ from lib_nz_model import *
 from lib_nz_output_view import *
 from lib_nz_dialog_procs import *
 
+
 def pipe_mode() -> None:
     # режим конвеера
     """
-    В режиме конвеера входные данных берутся из потока ввода 
+    В режиме конвеера входные данных берутся из потока ввода
     в виде последовательности операторов
     Операторы разделяются знаком #
     Оператор это последовательность параметров вида Параметр=Значение;
@@ -34,7 +33,7 @@ def pipe_mode() -> None:
                     "Введи код операции! Доступны коды lP|xP|eP|+P|+I|eI|vP|+T|lT|xT|eT")
             case "+P":
                 project_id = statement["project_id"]
-                if (project_id == ""):
+                if project_id == "":
                     print("Нужен ID проекта project_id=projectId")
                 else:
                     add_project_id(project_id)
@@ -47,7 +46,7 @@ def pipe_mode() -> None:
                     given_record[attr] = statement[attr]
                 record = overwriteDict(initial_record, given_record)
                 print(record)
-                if (project_id == ""):
+                if project_id == "":
                     print("Нужен ID проекта project_id=projectId")
                 else:
                     add_project_id(project_id)
@@ -64,7 +63,7 @@ def pipe_mode() -> None:
                     given_record[attr] = statement[attr]
                 print(given_record)
                 record = overwriteDict(old_record, given_record)
-                if (project_id == ""):
+                if project_id == "":
                     print("Нужен ID проекта project_id=projectId")
                 else:
                     add_project_id(project_id)
@@ -73,13 +72,13 @@ def pipe_mode() -> None:
                 list_projects()
             case "vP":
                 project_id = statement["project_id"]
-                if (project_id == ""):
+                if project_id == "":
                     print("Нужен ID проекта project_id=projectId")
                 else:
                     view_existing_project_info(project_id)
             case "xP":
                 project_id = statement["project_id"]
-                if (project_id == ""):
+                if project_id == "":
                     print("Нужен ID проекта project_id=projectId")
                 else:
                     delete_project_totally(project_id)
@@ -120,7 +119,7 @@ def pipe_mode() -> None:
                 print(old_record)
                 print(given_record)
                 record = overwriteDict(old_record, given_record)
-                if (project_id == ""):
+                if project_id == "":
                     print(
                         "Нужен ID проекта project_id=projectId и(или) ID задачи task_id=taskId")
                 else:
