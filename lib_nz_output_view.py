@@ -1,8 +1,10 @@
+""" Модуль для отображения проектов или задач в табличной форме """
 from prettytable import PrettyTable
 from lib_nz_model import *
 from lib_nz_config_attributes import *
 
 # ################# view #################
+
 
 def output_projects_view(filter_on: bool, filter_value: str) -> None:
     """

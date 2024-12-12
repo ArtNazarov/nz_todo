@@ -1,3 +1,4 @@
+""" Модуля для сохранения или записи задачи по проекту """
 import os
 import lib_nz_tasks
 from lib_nz_current_path import current_path

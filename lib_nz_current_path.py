@@ -1,3 +1,4 @@
+""" Модуль для получения абс. путей к используемым каталогам или файлам  """
 import os
 
 
@@ -13,6 +14,13 @@ def current_path() -> str:
     Псевдоним для get_cur_path
     """
     return get_cur_path()
+
+
+def get_index_path() -> str:
+    """
+    Возвращает путь к файлу проектов index.projects
+    """
+    return os.path.join(get_cur_path(), 'index.projects')
 
 
 def index_path() -> str:

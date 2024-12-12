@@ -1,3 +1,4 @@
+""" Модуль для сохранения и чтения информации о задаче проекта """
 import os
 
 
@@ -7,7 +8,8 @@ def save_todo_info(project_id: str, todo_info: dict[str, str]) -> None:
 
     Параметры:
     project_id (str): Уникальный строковый ID проекта
-    todo_info (dict): Словарь ключ-значение, где ключи - атрибуты заметки (caption, description, priority).
+    todo_info (dict): Словарь ключ-значение, где
+    ключи - атрибуты заметки (caption, description, priority).
     """
     # Создаем каталог согласно ключа
 
@@ -21,7 +23,7 @@ def save_todo_info(project_id: str, todo_info: dict[str, str]) -> None:
         # получаем полный путь к файлу
         file_path = os.path.join(project_path, f"{project_id}.{key}")
         # открываем на запись
-        with open(file_path, 'w') as file:
+        with open(file_path, 'w', encoding='utf-8') as file:
             # пишем строковое значение
             file.write(value)
 
@@ -49,7 +51,7 @@ def read_todo_info(project_id: str) -> dict[str, str]:
                 # получаем имя файла
                 file_path = os.path.join(project_path, filename)
                 # откроем на считывание
-                with open(file_path, 'r') as file:
+                with open(file_path, 'r', encoding='utf-8') as file:
                     # забираем значение атрибута
                     # очищаем от строку слева и справа
                     todo_info[key] = file.read().strip()
@@ -59,7 +61,7 @@ def read_todo_info(project_id: str) -> dict[str, str]:
 
 def is_attributes_exists(project_id: str) -> bool:
     """
-    Существует ли каталог с проектом    
+    Существует ли каталог с проектом
     """
     project_path = f"project_{project_id}"
     # Проверим, что путь к проекту существует

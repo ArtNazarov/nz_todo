@@ -1,3 +1,4 @@
+""" Модуль для чтения-записи списка задач в проекте """
 import sys
 from lib_nz_current_path import get_tasks_index_path
 

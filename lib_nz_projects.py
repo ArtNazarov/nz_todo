@@ -1,10 +1,6 @@
+""" Модуль для записи-чтения списка проектов """
 import sys
-import os
-from lib_nz_current_path import get_cur_path
-
-
-def get_index_path() -> str:
-    return os.path.join(get_cur_path(), 'index.projects')
+from lib_nz_current_path import get_cur_path, get_index_path
 
 
 def add_project_id(project_id: str) -> str:
