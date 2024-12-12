@@ -44,6 +44,18 @@ class TestGetModeFromCommandLine(unittest.TestCase):
     @patch('sys.argv', ['script_name', 'other_arg=value'])
     def test_get_task_id_from_commandline_no_project_id(self):
         self.assertEqual(get_task_id_from_commandline(), '')
+
+    @patch('sys.argv', ['script_name', 'project_id=test', '.a=A', '.b=B', '.c=C'])
+    def test_get_record_from_commandline(self):
+        self.assertEqual(get_record_from_commandline('test', ("a", "b", "c")), {"a" : "A", "b" : "B", "c":"C"})
+    
+    @patch('sys.argv', ['script_name', 'task_id=test', '.a=A', '.b=B', '.c=C'])
+    def test_get_record_about_task_from_commandline(self):
+        self.assertEqual(get_record_about_task_from_commandline('test', 'task', ("a", "b", "c")), {"a" : "A", "b" : "B", "c":"C"})
+    
+    @patch('sys.argv', ['script_name', 'opcode=+T', 'project_id=project', 'task_id=test', '.a=A', '.b=B', '.c=C'])
+    def test_get_attributes_from_commandline(self):
+        self.assertEqual(get_attributes_from_commandline(), ["a", "b", "c"])
     
 
 
