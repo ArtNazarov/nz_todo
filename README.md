@@ -125,3 +125,8 @@ testProject
 Каталога /home/artem/nz_todo/project_testProject нет, удалять нечего
 Проектов не найдено!
 ```
+
+Deps graph
+===
+[View on Gauge](https://show.gauge.sh/?uid=82ba29cb-fbc0-417c-b2b4-2005b1978519)
+
