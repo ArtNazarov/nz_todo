@@ -7,6 +7,7 @@ from lib_nz_tasks import *
 
 
 def load_full_model() -> dict:
+    """ Загружает модель в память (проекты и задачи к ним) """
     model = dict()
     project_ids = read_project_ids()
     for project_id in project_ids:
@@ -22,6 +23,7 @@ def load_full_model() -> dict:
 
 
 def extract_table_projects_from_model(model: dict, attrs_sequence: tuple[str, ...] | list[str]) -> list[list[str]]:
+    """ Извлекает из модели таблицу проектов """
     table = []
     for project_id in model:
         props = []
@@ -33,9 +35,10 @@ def extract_table_projects_from_model(model: dict, attrs_sequence: tuple[str, ..
 
 
 def extract_table_tasks_from_model(model: dict, project_id: str, attrs_sequence: tuple[str, ...] | list[str]) -> list[list[str]]:
+    """ Извлекает из модели таблицу задач по проекту """
     table = []
     for task in model[project_id]['task_list']:
-        props = ['task_id']
+        props = [task['task_id']]
         for attr in attrs_sequence:
             props.append(task[attr])
         table.append(props)
