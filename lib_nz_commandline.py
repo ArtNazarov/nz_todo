@@ -82,15 +82,13 @@ def get_record_about_task_from_commandline(project_id: str, task_id: str, attrib
     return record
 
 
-def get_attributes_from_commandline() -> set[str]:
+def get_attributes_from_commandline() -> list[str]:
     """
-    Составляет множество атрибутов по командной строке
+    Составляет список атрибутов по командной строке
 
     Параметры должны иметь вид .Поле=Значение
     """
-    attrs = set()
-    n = len(sys.argv)
-
+    
     # Регулярное выражение для извлечения значений
     pattern = r"\.(\w+)="
 
