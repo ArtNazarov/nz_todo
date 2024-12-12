@@ -33,7 +33,7 @@ def commandline_mode() -> None:
             project_id = get_project_id_from_commandline()
             initial_record = fill_empty_record("project")
             save_todo_info(project_id, initial_record)
-            record = overwriteDict(initial_record, get_record_from_commandline(
+            record = overwrite_dict(initial_record, get_record_from_commandline(
                 project_id, attributes_of_project()))
             print(record)
             if (project_id == ""):
@@ -51,7 +51,7 @@ def commandline_mode() -> None:
             new_record = get_record_from_commandline(
                 project_id,  get_attributes_from_commandline())
             print(new_record)
-            record = overwriteDict(old_record, new_record)
+            record = overwrite_dict(old_record, new_record)
             if (project_id == ""):
                 print("Нужен ID проекта project_id=projectId")
             else:
@@ -100,7 +100,7 @@ def commandline_mode() -> None:
             new_record = get_record_about_task_from_commandline(
                 project_id, task_id, attributes_of_task())
             print(new_record)
-            record = overwriteDict(old_record, new_record)
+            record = overwrite_dict(old_record, new_record)
             if (project_id == ""):
                 print(
                     "Нужен ID проекта project_id=projectId и(или) ID задачи task_id=taskId")

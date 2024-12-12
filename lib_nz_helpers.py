@@ -1,10 +1,10 @@
+""" Модуль для вспомогательных функций общего назначения """
+import os
 from lib_nz_config_attributes import *
 from lib_nz_current_path import *
 
-import os
 
-
-def overwriteDict(old_record: dict[str, str], new_record: dict[str, str]) -> dict[str, str]:
+def overwrite_dict(old_record: dict[str, str], new_record: dict[str, str]) -> dict[str, str]:
     """
     Перезаписывает значениями новой записи значения старой
     """
@@ -34,7 +34,7 @@ def fill_empty_record(type_of_record: str) -> dict[str, str]:
     В зависимости от типа (проект или задача) заполняет словарь
     """
     attributes = attributes_of_task()
-    if (type_of_record == "project"):
+    if type_of_record == "project":
         attributes = attributes_of_project()
     empty_record = dict()
     for attr in attributes:

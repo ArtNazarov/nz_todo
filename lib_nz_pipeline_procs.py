@@ -44,7 +44,7 @@ def pipe_mode() -> None:
                 given_record = dict()
                 for attr in attributes_of_project():
                     given_record[attr] = statement[attr]
-                record = overwriteDict(initial_record, given_record)
+                record = overwrite_dict(initial_record, given_record)
                 print(record)
                 if project_id == "":
                     print("Нужен ID проекта project_id=projectId")
@@ -62,7 +62,7 @@ def pipe_mode() -> None:
                 for attr in attributes_of_project():
                     given_record[attr] = statement[attr]
                 print(given_record)
-                record = overwriteDict(old_record, given_record)
+                record = overwrite_dict(old_record, given_record)
                 if project_id == "":
                     print("Нужен ID проекта project_id=projectId")
                 else:
@@ -91,7 +91,7 @@ def pipe_mode() -> None:
                 for attr in attributes_of_task():
                     if attr in statement.keys():
                         given_record[attr] = statement[attr]
-                record = overwriteDict(empty_record, given_record)
+                record = overwrite_dict(empty_record, given_record)
                 record["task_id"] = task_id
                 save_task_info(project_id, record)
             case "lT":
@@ -118,7 +118,7 @@ def pipe_mode() -> None:
                     project_id != "" and task_id != "" and is_attributes_of_task_exists(project_id, task_id)) else empty_record
                 print(old_record)
                 print(given_record)
-                record = overwriteDict(old_record, given_record)
+                record = overwrite_dict(old_record, given_record)
                 if project_id == "":
                     print(
                         "Нужен ID проекта project_id=projectId и(или) ID задачи task_id=taskId")
