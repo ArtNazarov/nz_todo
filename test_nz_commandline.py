@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch
-from lib_nz_commandline import get_mode_from_commandline
+from lib_nz_commandline import *
 
 
 class TestGetModeFromCommandLine(unittest.TestCase):
@@ -20,6 +20,15 @@ class TestGetModeFromCommandLine(unittest.TestCase):
     @patch('sys.argv', ['script_name', 'other_arg=value'])
     def test_no_mode_argument(self):
         self.assertEqual(get_mode_from_commandline(), 'dialog')
+    
+    @patch('sys.argv', ['script_name', 'opcode=+P'])
+    def test_get_operation_from_commandline_with_opcode(self):
+        self.assertEqual(get_operation_from_commandline(), '+P')
+
+    @patch('sys.argv', ['script_name', 'other_arg=value'])
+    def test_get_operation_from_commandline_no_opcode(self):
+        self.assertEqual(get_operation_from_commandline(), '')
+    
 
 
 if __name__ == '__main__':
