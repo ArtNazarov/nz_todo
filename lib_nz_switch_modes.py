@@ -1,7 +1,8 @@
 """ Модуль для переключения приложения между режимами """
-from lib_nz_commandline_procs import *
-from lib_nz_pipeline_procs import *
-from lib_nz_dialog_procs import *
+from lib_nz_commandline_procs import commandline_mode
+from lib_nz_commandline_procs import get_mode_from_commandline
+from lib_nz_pipeline_procs import pipe_mode
+from lib_nz_dialog_procs import dialog_mode
 
 
 def switch_modes() -> None:
