@@ -1,3 +1,4 @@
+""" Модуль для считывания модели и извлечения из нее таблиц """
 from lib_nz_project_info import *
 from lib_nz_task_info import *
 from lib_nz_projects import *
@@ -44,8 +45,12 @@ def extract_table_tasks_from_model(model: dict, project_id: str, attrs_sequence:
         table.append(props)
     return table
 
+
 def filter_view(table: list[list[str]], filter_on: bool, filter_value: str) -> list[list[str]]:
-    if filter_on == False:
+    """
+    Фильтрует таблицу по совпадению с фильтром
+    """
+    if filter_on is False:
         return table
     if filter_value == "":
         return table
