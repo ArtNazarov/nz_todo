@@ -1,3 +1,4 @@
+""" Модуль для разбора параметров командной строки """
 import sys
 
 
@@ -18,9 +19,9 @@ def get_operations_list_inner(input_data: str) -> list[str]:
         operation = dict()
 
         for pair in pairs:
-            list = pair.split('=')
-            key = list[0].strip()
-            value = list[1].replace('"', '').strip()
+            lst = pair.split('=')
+            key = lst[0].strip()
+            value = lst[1].replace('"', '').strip()
             if key[0] == ".":
                 key = key[1:]
             operation[key] = value
@@ -30,5 +31,8 @@ def get_operations_list_inner(input_data: str) -> list[str]:
 
 
 def get_operations_list() -> list[str]:
+    """
+    Возвращает список операций
+    """
     input_data = sys.stdin.read().strip()
     return get_operations_list_inner(input_data)
