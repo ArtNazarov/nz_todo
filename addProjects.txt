@@ -1,0 +1,36 @@
+opcode=+P ; project_id=TestProject1 #
+opcode=+I ; project_id=TestProject1 ; .НазваниеПроекта=testN1 ; .ОписаниеПроекта=testD1 ; .СтатусПроекта=active #
+opcode=+P ; project_id=TestProject2 #
+opcode=+I ; project_id=TestProject2 ; .НазваниеПроекта=testN2 ; .ОписаниеПроекта=testD2 ; .СтатусПроекта=suspended #
+opcode=+P ; project_id=TestProject3 #
+opcode=+I ; project_id=TestProject3 ; .НазваниеПроекта=testN3 ; .ОписаниеПроекта=testD3 ; .СтатусПроекта=active #
+opcode=+P ; project_id=TestProject4 #
+opcode=+I ; project_id=TestProject4 ; .НазваниеПроекта=testN4 ; .ОписаниеПроекта=testD4 ; .СтатусПроекта=suspended #
+opcode=+P ; project_id=TestProject5 #
+opcode=+I ; project_id=TestProject5 ; .НазваниеПроекта=testN5 ; .ОписаниеПроекта=testD5 ; .СтатусПроекта=active #
+opcode=+P ; project_id=TestProject6 #
+opcode=+I ; project_id=TestProject6 ; .НазваниеПроекта=testN6 ; .ОписаниеПроекта=testD6 ; .СтатусПроекта=active #
+opcode=+P ; project_id=TestProject7 #
+opcode=+I ; project_id=TestProject7 ; .НазваниеПроекта=testN7 ; .ОписаниеПроекта=testD7 ; .СтатусПроекта=active #
+opcode=+P ; project_id=TestProject8 #
+opcode=+I ; project_id=TestProject8 ; .НазваниеПроекта=testN8 ; .ОписаниеПроекта=testD8 ; .СтатусПроекта=suspended #
+opcode=+P ; project_id=TestProject9 #
+opcode=+I ; project_id=TestProject9 ; .НазваниеПроекта=testN9 ; .ОписаниеПроекта=testD9 ; .СтатусПроекта=active #
+opcode=+P ; project_id=TestProject10 #
+opcode=+I ; project_id=TestProject10 ; .НазваниеПроекта=testN10 ; .ОписаниеПроекта=testD10 ; .СтатусПроекта=active #
+opcode=+P ; project_id=TestProject11 #
+opcode=+I ; project_id=TestProject11 ; .НазваниеПроекта=testN11 ; .ОписаниеПроекта=testD11 ; .СтатусПроекта=active #
+opcode=+P ; project_id=TestProject12 #
+opcode=+I ; project_id=TestProject12 ; .НазваниеПроекта=testN12 ; .ОписаниеПроекта=testD12 ; .СтатусПроекта=active #
+opcode=+P ; project_id=TestProject13 #
+opcode=+I ; project_id=TestProject13 ; .НазваниеПроекта=testN13 ; .ОписаниеПроекта=testD13 ; .СтатусПроекта=active #
+opcode=+P ; project_id=TestProject14 #
+opcode=+I ; project_id=TestProject14 ; .НазваниеПроекта=testN14 ; .ОписаниеПроекта=testD14 ; .СтатусПроекта=active #
+opcode=+P ; project_id=TestProject15 #
+opcode=+I ; project_id=TestProject15 ; .НазваниеПроекта=testN15 ; .ОписаниеПроекта=testD15 ; .СтатусПроекта=suspended #
+opcode=+P ; project_id=TestProject16 #
+opcode=+I ; project_id=TestProject16 ; .НазваниеПроекта=testN16 ; .ОписаниеПроекта=testD16 ; .СтатусПроекта=active #
+opcode=+P ; project_id=TestProject17 #
+opcode=+I ; project_id=TestProject17 ; .НазваниеПроекта=testN17 ; .ОписаниеПроекта=testD17 ; .СтатусПроекта=active #
+opcode=+P ; project_id=TestProject18 #
+opcode=+I ; project_id=TestProject18 ; .НазваниеПроекта=testN18 ; .ОписаниеПроекта=testD18 ; .СтатусПроекта=suspended

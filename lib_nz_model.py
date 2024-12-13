@@ -30,7 +30,7 @@ def extract_table_projects_from_model(model: dict, attrs_sequence: tuple[str, ..
         props = []
         props.append(project_id)
         for attr in attrs_sequence:
-            props.append(model[project_id]['project_info'][attr])
+            props.append(model[project_id]['project_info'].get(attr, '???'))
         table.append(props)
     return table
 

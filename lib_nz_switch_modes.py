@@ -3,6 +3,7 @@ from lib_nz_commandline_procs import commandline_mode
 from lib_nz_commandline_procs import get_mode_from_commandline
 from lib_nz_pipeline_procs import pipe_mode
 from lib_nz_dialog_procs import dialog_mode
+from lib_nz_scroll_table import scroll_mode_projects
 
 
 def switch_modes() -> None:
@@ -16,5 +17,7 @@ def switch_modes() -> None:
         dialog_mode()
     elif mode == "commandline":  # если в командном
         commandline_mode()
+    elif mode == "scrollviewer:projects":
+        scroll_mode_projects()
     else:  # неизвестный режим
         print("Unknown mode! Use mode=dialog or mode=commandline")
