@@ -4,7 +4,7 @@ from lib_nz_commandline_procs import get_mode_from_commandline, get_project_id_f
 from lib_nz_pipeline_procs import pipe_mode
 from lib_nz_dialog_procs import dialog_mode
 from lib_nz_scroll_table import scroll_mode_projects, scroll_mode_tasks
-
+from lib_nz_servermode import server_mode
 
 def switch_modes() -> None:
     """
@@ -22,5 +22,7 @@ def switch_modes() -> None:
             scroll_mode_projects()
         case "scrollviewer:tasks":
             scroll_mode_tasks(get_project_id_from_commandline())
+        case "server":
+            server_mode()
         case _:  # неизвестный режим
-            print("Unknown mode! Use mode=dialog|commandline|scrollviewer:projects|scrollviewer:tasks|pipe")
+            print("Unknown mode! Use mode=dialog|commandline|scrollviewer:projects|scrollviewer:tasks|pipe|server")

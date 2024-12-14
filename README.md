@@ -132,6 +132,21 @@ testProject
 Проектов не найдено!
 ```
 
+Scrolling view mode
+===
+```
+python term_todos.py mode=scrollviewer:projects
+```
+
+Server mode
+===
+```
+python term_todos.py mode=server
+```
+
+Routes:
+1. /model to get all info about both projects and tasks
+
 Deps graph
 ===
 [View on Gauge](https://show.gauge.sh/?uid=82ba29cb-fbc0-417c-b2b4-2005b1978519)
