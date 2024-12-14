@@ -72,11 +72,12 @@ class GenerateData:
         return lst
 
 class UserInterface:
-    def __init__(self, data, output):
+    def __init__(self, data, output, entity):
         self.data = data
         self.ui = Drawer(output)
         self.max_columns = len(data[0])
         self.max_rows = len(data)
+        self.entity = entity
 
     def event_loop(self):
         curses.curs_set(0)  # Hide cursor
@@ -91,6 +92,11 @@ class UserInterface:
                 needRedraw = False
 
             key = self.ui.o.getch()
+
+            if key == ord(' '):
+                if self.entity == "projects" and self.ui.selected_row > 0:
+                    project_id = self.data[self.ui.selected_row][0]
+                    scroll_mode_tasks(project_id)
 
             # scrolling left-right
             if key == curses.KEY_LEFT and self.ui.selected_column > 0:
@@ -121,13 +127,16 @@ class UserInterface:
                             self.data) - 10 if len(self.data) > 10 else len(self.data) - 1
                 needRedraw = True
             elif key == ord('q'):  # Quit on 'q'
-                break
+                if self.entity == 'tasks':
+                    scroll_mode_projects()
+                else:
+                    exit(0)
 
 
-def run_app(cs, data):
+def run_app(cs, data, entity):
 
     def main(stdscr):
-        ui = UserInterface(data, stdscr)
+        ui = UserInterface(data, stdscr, entity)
         # Получение максимальных размеров окна
         max_y, max_x = stdscr.getmaxyx()
         ui.ui.set_width(max_x // min(3, len(data[0])))
@@ -139,7 +148,7 @@ def run_app(cs, data):
 def exampleApp():
     data_generator = GenerateData()
     data = data_generator.get_matrix()
-    run_app(curses, data)
+    run_app(curses, data, '')
 
    
 def scroll_mode_projects():
@@ -149,7 +158,7 @@ def scroll_mode_projects():
     # k = input('press enter')
     data = extract_table_projects_from_model(model, attributes_of_project())
     data.insert(0, attributes_of_project())
-    run_app(curses, data)
+    run_app(curses, data, "projects")
     
 
 def scroll_mode_tasks(project_id):
@@ -159,4 +168,4 @@ def scroll_mode_tasks(project_id):
     # k = input('press enter')
     data = extract_table_tasks_from_model(model, project_id, attributes_of_task())
     data.insert(0, attributes_of_task())
-    run_app(curses, data)
+    run_app(curses, data, "tasks")
