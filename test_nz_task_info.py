@@ -30,7 +30,7 @@ class TestTaskFunctions(unittest.TestCase):
     def test_get_attributes_of_task(self):
         result = get_attributes_of_task(self.project_id, self.task_info['task_id'])
         # Проверяем что атрибут был считан
-        self.assertEqual(self.task_info.keys(), result)
+        self.assertEqual(set(sorted(self.task_info.keys())), result)
 
 if __name__ == '__main__':
     unittest.main()

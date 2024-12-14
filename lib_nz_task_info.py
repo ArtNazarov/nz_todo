@@ -100,9 +100,9 @@ def get_attributes_of_task(project_id: str, task_id: str) -> set[str]:
     task_id (str): Уникальный ID тасков
 
     Возвращает:
-    set: Множество атрибутов
+    set[str]: Список атрибутов
     """
-    attrs = set()
+    attrs = []
 
     task_path = get_task_info_path_by_id(project_id, task_id)
 
@@ -111,6 +111,6 @@ def get_attributes_of_task(project_id: str, task_id: str) -> set[str]:
         # Считываем атрибуты по файлам
         for filename in os.listdir(task_path):
             key = filename.split('.')[1]  # Извлечем атрибут
-            attrs |= {key}
+            attrs.append(key)
 
-    return set(attrs)
+    return set(sorted(attrs))
