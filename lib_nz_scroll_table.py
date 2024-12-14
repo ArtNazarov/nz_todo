@@ -128,6 +128,9 @@ def run_app(cs, data):
 
     def main(stdscr):
         ui = UserInterface(data, stdscr)
+        # Получение максимальных размеров окна
+        max_y, max_x = stdscr.getmaxyx()
+        ui.ui.set_width(max_x // min(3, len(data[0])))
         ui.event_loop()
 
     cs.wrapper(main)
