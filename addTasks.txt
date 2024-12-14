@@ -1,0 +1,55 @@
+opcode=+T ; task_id=t1 ; project_id=TestProject1 ; .НазваниеЗадачи=testN1 ; .ОписаниеЗадачи=testD1 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=t2 ; project_id=TestProject2 ; .НазваниеЗадачи=testN2 ; .ОписаниеЗадачи=testD2 ; .ПриоритетЗадачи=suspended #
+opcode=+T ; task_id=t3 ; project_id=TestProject3 ; .НазваниеЗадачи=testN3 ; .ОписаниеЗадачи=testD3 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=t4 ; project_id=TestProject4 ; .НазваниеЗадачи=testN4 ; .ОписаниеЗадачи=testD4 ; .ПриоритетЗадачи=suspended #
+opcode=+T ; task_id=t5 ; project_id=TestProject5 ; .НазваниеЗадачи=testN5 ; .ОписаниеЗадачи=testD5 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=t6 ; project_id=TestProject6 ; .НазваниеЗадачи=testN6 ; .ОписаниеЗадачи=testD6 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=t7 ; project_id=TestProject7 ; .НазваниеЗадачи=testN7 ; .ОписаниеЗадачи=testD7 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=t8 ; project_id=TestProject8 ; .НазваниеЗадачи=testN8 ; .ОписаниеЗадачи=testD8 ; .ПриоритетЗадачи=suspended #
+opcode=+T ; task_id=t9 ; project_id=TestProject9 ; .НазваниеЗадачи=testN9 ; .ОписаниеЗадачи=testD9 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=t10 ; project_id=TestProject10 ; .НазваниеЗадачи=testN10 ; .ОписаниеЗадачи=testD10 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=t11 ; project_id=TestProject11 ; .НазваниеЗадачи=testN11 ; .ОписаниеЗадачи=testD11 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=t12 ; project_id=TestProject12 ; .НазваниеЗадачи=testN12 ; .ОписаниеЗадачи=testD12 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=t13 ; project_id=TestProject13 ; .НазваниеЗадачи=testN13 ; .ОписаниеЗадачи=testD13 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=t14 ; project_id=TestProject14 ; .НазваниеЗадачи=testN14 ; .ОписаниеЗадачи=testD14 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=t15 ; project_id=TestProject15 ; .НазваниеЗадачи=testN15 ; .ОписаниеЗадачи=testD15 ; .ПриоритетЗадачи=suspended #
+opcode=+T ; task_id=t16 ; project_id=TestProject16 ; .НазваниеЗадачи=testN16 ; .ОписаниеЗадачи=testD16 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=t17 ; project_id=TestProject17 ; .НазваниеЗадачи=testN17 ; .ОписаниеЗадачи=testD17 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=t18 ; project_id=TestProject18 ; .НазваниеЗадачи=testN18 ; .ОписаниеЗадачи=testD18 ; .ПриоритетЗадачи=suspended
+opcode=+T ; task_id=a1 ; project_id=TestProject1 ; .НазваниеЗадачи=testN1 ; .ОписаниеЗадачи=testD1 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=a2 ; project_id=TestProject2 ; .НазваниеЗадачи=testN2 ; .ОписаниеЗадачи=testD2 ; .ПриоритетЗадачи=suspended #
+opcode=+T ; task_id=a3 ; project_id=TestProject3 ; .НазваниеЗадачи=testN3 ; .ОписаниеЗадачи=testD3 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=a4 ; project_id=TestProject4 ; .НазваниеЗадачи=testN4 ; .ОписаниеЗадачи=testD4 ; .ПриоритетЗадачи=suspended #
+opcode=+T ; task_id=a5 ; project_id=TestProject5 ; .НазваниеЗадачи=testN5 ; .ОписаниеЗадачи=testD5 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=a6 ; project_id=TestProject6 ; .НазваниеЗадачи=testN6 ; .ОписаниеЗадачи=testD6 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=a7 ; project_id=TestProject7 ; .НазваниеЗадачи=testN7 ; .ОписаниеЗадачи=testD7 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=a8 ; project_id=TestProject8 ; .НазваниеЗадачи=testN8 ; .ОписаниеЗадачи=testD8 ; .ПриоритетЗадачи=suspended #
+opcode=+T ; task_id=a9 ; project_id=TestProject9 ; .НазваниеЗадачи=testN9 ; .ОписаниеЗадачи=testD9 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=a10 ; project_id=TestProject10 ; .НазваниеЗадачи=testN10 ; .ОписаниеЗадачи=testD10 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=a11 ; project_id=TestProject11 ; .НазваниеЗадачи=testN11 ; .ОписаниеЗадачи=testD11 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=a12 ; project_id=TestProject12 ; .НазваниеЗадачи=testN12 ; .ОписаниеЗадачи=testD12 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=a13 ; project_id=TestProject13 ; .НазваниеЗадачи=testN13 ; .ОписаниеЗадачи=testD13 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=a14 ; project_id=TestProject14 ; .НазваниеЗадачи=testN14 ; .ОписаниеЗадачи=testD14 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=a15 ; project_id=TestProject15 ; .НазваниеЗадачи=testN15 ; .ОписаниеЗадачи=testD15 ; .ПриоритетЗадачи=suspended #
+opcode=+T ; task_id=a16 ; project_id=TestProject16 ; .НазваниеЗадачи=testN16 ; .ОписаниеЗадачи=testD16 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=a17 ; project_id=TestProject17 ; .НазваниеЗадачи=testN17 ; .ОписаниеЗадачи=testD17 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=a18 ; project_id=TestProject18 ; .НазваниеЗадачи=testN18 ; .ОписаниеЗадачи=testD18 ; .ПриоритетЗадачи=suspended
+
+opcode=+T ; task_id=b1 ; project_id=TestProject1 ; .НазваниеЗадачи=testN1 ; .ОписаниеЗадачи=testD1 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=b2 ; project_id=TestProject2 ; .НазваниеЗадачи=testN2 ; .ОписаниеЗадачи=testD2 ; .ПриоритетЗадачи=suspended #
+opcode=+T ; task_id=b3 ; project_id=TestProject3 ; .НазваниеЗадачи=testN3 ; .ОписаниеЗадачи=testD3 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=b4 ; project_id=TestProject4 ; .НазваниеЗадачи=testN4 ; .ОписаниеЗадачи=testD4 ; .ПриоритетЗадачи=suspended #
+opcode=+T ; task_id=b5 ; project_id=TestProject5 ; .НазваниеЗадачи=testN5 ; .ОписаниеЗадачи=testD5 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=b6 ; project_id=TestProject6 ; .НазваниеЗадачи=testN6 ; .ОписаниеЗадачи=testD6 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=b7 ; project_id=TestProject7 ; .НазваниеЗадачи=testN7 ; .ОписаниеЗадачи=testD7 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=b8 ; project_id=TestProject8 ; .НазваниеЗадачи=testN8 ; .ОписаниеЗадачи=testD8 ; .ПриоритетЗадачи=suspended #
+opcode=+T ; task_id=b9 ; project_id=TestProject9 ; .НазваниеЗадачи=testN9 ; .ОписаниеЗадачи=testD9 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=b10 ; project_id=TestProject10 ; .НазваниеЗадачи=testN10 ; .ОписаниеЗадачи=testD10 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=b11 ; project_id=TestProject11 ; .НазваниеЗадачи=testN11 ; .ОписаниеЗадачи=testD11 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=b12 ; project_id=TestProject12 ; .НазваниеЗадачи=testN12 ; .ОписаниеЗадачи=testD12 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=b13 ; project_id=TestProject13 ; .НазваниеЗадачи=testN13 ; .ОписаниеЗадачи=testD13 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=b14 ; project_id=TestProject14 ; .НазваниеЗадачи=testN14 ; .ОписаниеЗадачи=testD14 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=b15 ; project_id=TestProject15 ; .НазваниеЗадачи=testN15 ; .ОписаниеЗадачи=testD15 ; .ПриоритетЗадачи=suspended #
+opcode=+T ; task_id=a16 ; project_id=TestProject16 ; .НазваниеЗадачи=testN16 ; .ОписаниеЗадачи=testD16 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=b17 ; project_id=TestProject17 ; .НазваниеЗадачи=testN17 ; .ОписаниеЗадачи=testD17 ; .ПриоритетЗадачи=active #
+opcode=+T ; task_id=b18 ; project_id=TestProject18 ; .НазваниеЗадачи=testN18 ; .ОписаниеЗадачи=testD18 ; .ПриоритетЗадачи=suspended

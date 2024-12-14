@@ -22,7 +22,7 @@ def commandline_mode() -> None:
     opcode = get_operation_from_commandline()
     match opcode:
         case "":
-            print("Введи код операции! Доступны коды lP|xP|eP|+P|+I|eI|vP|+T|lT|xT|eT")
+            print("Не удалось получить код операции! Доступны коды lP|xP|eP|+P|+I|eI|vP|+T|lT|xT|eT")
         case "+P":
             project_id = get_project_id_from_commandline()
             if (project_id == ""):

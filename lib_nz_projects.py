@@ -49,7 +49,7 @@ def read_project_ids() -> list[str]:
             project_ids = sorted(set(line.strip() for line in file))
         return project_ids
     except FileNotFoundError as e:
-        print(f"Error: {e}", file=sys.stderr)
+        # print(f"Error: {e}", file=sys.stderr)
         return []
 
 
