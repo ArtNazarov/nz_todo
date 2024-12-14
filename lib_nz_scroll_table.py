@@ -144,8 +144,8 @@ def exampleApp():
    
 def scroll_mode_projects():
     model = load_full_model()
-    print(model)
-    k = input('press enter')
+    # print(model)
+    # k = input('press enter')
     data = extract_table_projects_from_model(model, attributes_of_project())
     data.insert(0, attributes_of_project())
     run_app(curses, data)
