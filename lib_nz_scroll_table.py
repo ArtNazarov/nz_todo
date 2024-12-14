@@ -1,6 +1,6 @@
 import curses
-from lib_nz_model import load_full_model, extract_table_projects_from_model
-from lib_nz_config_attributes import attributes_of_project
+from lib_nz_model import load_full_model, extract_table_projects_from_model, extract_table_tasks_from_model
+from lib_nz_config_attributes import attributes_of_project, attributes_of_task
 
 
 class Drawer:
@@ -143,9 +143,20 @@ def exampleApp():
 
    
 def scroll_mode_projects():
+    """ Просмотр проектов (прокрутка) """
     model = load_full_model()
     # print(model)
     # k = input('press enter')
     data = extract_table_projects_from_model(model, attributes_of_project())
     data.insert(0, attributes_of_project())
+    run_app(curses, data)
+    
+
+def scroll_mode_tasks(project_id):
+    """ Просмотр задач (прокрутка) """
+    model = load_full_model()
+    # print(model)
+    # k = input('press enter')
+    data = extract_table_tasks_from_model(model, project_id, attributes_of_task())
+    data.insert(0, attributes_of_task())
     run_app(curses, data)
